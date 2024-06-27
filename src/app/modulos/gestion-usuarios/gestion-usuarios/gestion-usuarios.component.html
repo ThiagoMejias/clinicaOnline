@@ -1,0 +1,28 @@
+<mat-toolbar class="mat-elevation-z4 mb-5">
+    <button mat-button (click)="mostrarAltaForm()">
+      <mat-icon>add</mat-icon>
+      Nuevo usuario
+    </button>
+    <span class="spacer"></span>
+    <div class="search-container">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        matInput
+        type="search"
+        placeholder="Buscar usuarios..."
+        [(ngModel)]="this.searchQuery"
+        (ngModelChange)="onSearchQueryChange()"/>
+    </div>
+</mat-toolbar>    
+
+  
+<div class="gestion-usuarios-container">
+    <h2>Gestión de Usuarios</h2>
+    <app-dynamic-table [objects]="usersParaTabla" (objectSelected)="mostrarUsuarioEdit($event)"></app-dynamic-table>
+    @if (openViewUser) {
+        <app-user-card [usuario]="userSelected" [vistaAdmin]="true" ></app-user-card>
+    }
+    @if(openUserForm){
+     <app-form-usuario rol="administrador"></app-form-usuario>
+    }
+</div>

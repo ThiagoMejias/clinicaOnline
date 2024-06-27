@@ -1,0 +1,18 @@
+
+<mat-toolbar class="mat-elevation-z4 mb-5">
+        <a (click)="toggleVerPerfil()"><h2 [ngClass]="{'selected': miPerfil}" class="Titulo" >Mi perfil</h2></a>
+        <span class="spacer"></span>
+        @if(this.user.Rol == "especialista"){
+            <a (click)="toggleVerHorarios()"><h2 [ngClass]="{'selected': misHorarios}" class="Titulo">Mis Horarios</h2></a>
+        }
+</mat-toolbar>    
+
+
+@if (miPerfil) {
+    <div class="container-user-card">
+        <app-user-card  [usuario]="this.user"></app-user-card>   
+    </div>
+}
+<!-- @if(misHorarios){
+    <app-mis-horarios [usuario]="this.user"></app-mis-horarios>
+} -->

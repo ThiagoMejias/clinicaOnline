@@ -1,0 +1,16 @@
+<table>
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns"  [ngClass]="{ 'hidden': !isColumnVisible(column) }">{{ column }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let object of objects" 
+          (click)="selectObject(object)" 
+          [class.selected]="object === selectedObject"
+          style="cursor: pointer;">
+          <td *ngFor="let column of columns" [hidden]="!isColumnVisible(column)">{{ object[column] }}</td>
+        </tr>
+    </tbody>
+</table>
+  

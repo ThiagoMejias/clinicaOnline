@@ -1,0 +1,43 @@
+<div class="flex flex-col items-center p-4">
+    <h1 class="text-3xl font-bold mb-4">Selección de Horarios</h1>
+    <div class="w-full max-w-4xl">
+      <div class="mb-4">
+        <label for="especialidad" class="block text-sm font-medium text-gray-700">
+          Especialidad
+        </label>
+        <select
+        id="especialidad"
+        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+        <option *ngFor="let especialidad of usuario.Especialidades">{{ especialidad.especialidad }}</option>
+      </select>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse border border-gray-200">
+          <thead>
+            <tr>
+              <th class="border border-gray-200 p-2"></th>
+              <th *ngFor="let hour of horas" class="border border-gray-200 p-2">{{ hour }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let day of dias">
+              <td class="border border-gray-200 p-2">{{ day }}</td>
+              <td
+                *ngFor="let hour of horas"
+                class="border border-gray-200 p-2"
+                [ngClass]="{
+                  'bg-blue-500': isSelected(day, hour),
+                  'bg-blue-100': !isSelected(day, hour)
+                }"
+                (mousedown)="handleMouseDown(day, hour)"
+                (mouseenter)="handleMouseEnter(day, hour)"
+                (mouseup)="handleMouseUp()"
+              ></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Guardar Horarios</button>
+    </div>
+  </div>
+  

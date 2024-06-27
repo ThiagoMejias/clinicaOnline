@@ -1,0 +1,26 @@
+<div class="login-box">
+    <h2>Login</h2>
+    <form>
+        <button class="btn btn-primary btn-block mb-3" (click)="cargarUsuarioAdmin()"  >Usuario Admin</button>
+        <button class="btn btn-primary btn-block mb-3" (click)="cargarUsuarioEspecialista()"  >Usuario Especialista</button>
+
+        <div class="user-box">
+            <input [(ngModel)]="email" name="email" required  #emailInput="ngModel" type="text">
+            <label>Email</label>
+        </div>
+
+        <p class="text-danger">{{emailError}}</p>
+        
+        <div class="user-box">
+            <input [(ngModel)]="password" name="password" required #passwordInput="ngModel" type="password">
+            <label>Contraseña</label>
+        </div>
+        
+        <p class="text-danger">{{passwordError}}</p>
+      
+        @if(isLoggedIn)
+        {
+            <button (click)="login()" class="btn btn-primary btn-block mb-3">Iniciar Sesión</button>
+        }
+    </form>
+</div>

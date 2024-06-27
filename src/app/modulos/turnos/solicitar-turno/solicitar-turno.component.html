@@ -1,0 +1,36 @@
+  <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="especialidad">Especialidad:</label>
+        <select formControlName="especialidad" id="especialidad" (change)="onEspecialidadChange($event.target.value)">
+          <option value="">Seleccione una especialidad</option>
+          <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="especialista">Especialista:</label>
+        <select formControlName="especialista" id="especialista" (change)="onEspecialistaChange($event.target.value)">
+          <option value="">Seleccione un especialista</option>
+          <option *ngFor="let especialista of especialistas" [value]="especialista">{{especialista}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="fecha">Fecha:</label>
+        <select formControlName="fecha" id="fecha">
+          <option value="">Seleccione una fecha</option>
+          <option *ngFor="let turno of especialista.disponibilidad" [value]="turno.fecha">{{turno.fecha}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="horario">Horario:</label>
+        <select formControlName="horario" id="horario">
+          <option value="">Seleccione un horario</option>
+          <option *ngFor="let turno of ESO" [value]="turno.horario">{{turno.horario}}</option>
+        </select>
+      </div>
+      <div *ngIf="isAdmin">
+        <label for="paciente">Paciente:</label>
+        <input formControlName="paciente" id="paciente" placeholder="Nombre del paciente">
+      </div>
+      <button type="submit" [disabled]="form.invalid">Solicitar Turno</button>
+  </form> -->
+  

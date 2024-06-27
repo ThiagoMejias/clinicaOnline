@@ -1,0 +1,23 @@
+
+<div class="container-form">
+
+    <div class="container-checks">
+        <label class="m-3 checkbox-label">
+            <input type="checkbox" [(ngModel)]="roles.especialista" (change)="onCheckboxChange($event)" name="especialista" id="especialista">
+            Especialista
+        </label>
+        <label class="m-3 checkbox-label">
+            <input type="checkbox" [(ngModel)]="roles.paciente" (change)="onCheckboxChange($event)" name="paciente" id="paciente">
+            Paciente
+        </label>
+   
+    </div>
+    
+    
+    <app-form-usuario 
+      [rol]="selectedRole"  
+      (getUsuario)="getUsuario($event)" 
+      *ngIf="ocultar">
+    </app-form-usuario>
+
+  </div>

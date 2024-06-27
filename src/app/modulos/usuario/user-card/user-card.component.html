@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-body">
+    <div class="container">
+      <div class="avatar-container">
+        <img class="avatar-image" src="{{usuario.Imagen}}" alt="Avatar">
+      </div>  
+      <h5 class="card-title">{{ usuario.Nombre }} {{ usuario.Apellido }}</h5>
+    </div>
+    
+    <div class="user-details">
+ 
+      <p class="card-text"><strong>DNI:</strong> {{ usuario.Dni }}</p>
+      <p class="card-text"><strong>Email:</strong> {{ usuario.Email }}</p>
+      <p class="card-text"><strong>Rol:</strong> {{ usuario.Rol }}</p>
+      
+      @if(vistaAdmin){
+        <p class="card-text" *ngIf="usuario.Rol === 'especialista'">
+          <strong>Estado:</strong> {{ usuario.Autorizado ? 'Habilitado' : 'Inhabilitado' }}
+        </p>
+        <hr>
+        <button class="btn btn-sm" (click)="toggleAccess()">
+          {{ usuario.Autorizado ? 'Inhabilitar' : 'Habilitar' }}
+        </button>
+      }
+    </div>
+  </div>
+</div>

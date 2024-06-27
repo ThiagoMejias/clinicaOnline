@@ -1,0 +1,17 @@
+mat-icon {
+    font-size: 24px;  /* Cambia el tamaño del icono */
+    margin: 4px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+  .logout{
+    color:red;
+  }
+
+.header{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
