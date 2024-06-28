@@ -14,12 +14,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     Test2Component,
     HeaderComponent,
-    NoAutorizadoComponent
+    NoAutorizadoComponent,
   ],
   imports: [
     MatIconModule,

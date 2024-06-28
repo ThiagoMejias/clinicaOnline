@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
+import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { LoginComponent } from './login/login.component';
   imports: [
     FormsModule,
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    ModuloCompartidoModule
   ]
  
 })

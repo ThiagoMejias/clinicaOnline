@@ -20,7 +20,11 @@
       
         @if(isLoggedIn)
         {
-            <button (click)="login()" class="btn btn-primary btn-block mb-3">Iniciar Sesión</button>
+            @if(loading){
+                  <spinner></spinner>
+            }@else {
+                <button (click)="login()" class="btn btn-primary btn-block mb-3">Iniciar Sesión</button>
+            }
         }
     </form>
 </div>

@@ -6,9 +6,9 @@ import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.
 
 const routes: Routes = [
   { 
-    path: '',
-    loadChildren: () => import('./modulos/home/home.module').then(m => m.HomeModule),
-    canActivate: [authGuard]
+    path: '', 
+    redirectTo: 'miPerfil', 
+    pathMatch: 'full' 
   },
   { 
     path: 'login',

@@ -12,7 +12,7 @@ import { UsuarioGenerico } from '../../../interfaces/Usuarios';
 export class LoginComponent {
 
   isLoggedIn: boolean = true;
-
+  public loading: boolean = false;
   //#region variables de formulario 
   email: string = '';
   emailError: string = '';
@@ -46,6 +46,7 @@ export class LoginComponent {
 
   async login() {
     if (this.verifyFields()) {
+      this.loading = true;
       let user = await this.authService.loginUser(this.email, this.password);
       if(user.emailVerified){
 
@@ -62,6 +63,7 @@ export class LoginComponent {
                 icon: 'error'
               });
             }
+            this.loading = false;
           },
           error => {
             console.error('Error obteniendo datos de usuario:', error);

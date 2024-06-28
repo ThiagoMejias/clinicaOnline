@@ -5,7 +5,16 @@ mat-icon {
     margin-bottom: 0px;
     cursor: pointer;
 }
-
+:root {
+  --primary-color: #3F51B5;
+  --secondary-color: #FFFFFF;
+  --background-color: #d3d3d3;
+  --text-primary-color: #212121;
+  --text-secondary-color: #757575;
+  --highlight-color: #979797;
+  --danger-color: #E53935;
+  --font-family: 'Arial', sans-serif;
+}
   .logout{
     color:red;
   }
@@ -14,4 +23,32 @@ mat-icon {
     display: flex;
     align-items: center;
     margin-top: 20px;
+}
+
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-primary-color);
+}
+
+.navbar {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.navbar-brand, .nav-link {
+  color: var(--secondary-color) !important;
+}
+
+.nav-link.active {
+  color: var(--highlight-color) !important;
+}
+
+.btn {
+  color: var(--secondary-color);
+}
+
+.btn:hover {
+  color: var(--highlight-color);
 }

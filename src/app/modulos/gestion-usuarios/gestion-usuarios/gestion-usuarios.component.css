@@ -22,13 +22,14 @@
     transition: background-color 0.3s, color 0.3s;
   }
   
-  .toolbar button:hover {
+.toolbar button:hover {
     background-color: #007bff;
     color: #ffffff;
+}
+  .container-usuarios{
+    display: flex;
+    flex-direction: row;
   }
-  
-
-
 
 .gestion-usuarios-container{
     display: flex;
@@ -67,8 +68,27 @@
   color: #333; 
 }
 
-  input[matInput] {
+  input[matInput] { 
     padding-left: 32px; 
     width: 300px;
   }
   
+
+  .search-input {
+    border: none;
+    outline: none;
+    background-color: var(--secondary-color);
+    color: var(--text-primary-color);
+    padding: 5px;
+    font-family: var(--font-family);
+  }
+  
+  .search-input::placeholder {
+    color: var(--text-secondary-color);
+  }
+  
+  .search-input:focus {
+    border-bottom: 2px solid var(--primary-color);
+  }
+  
+

@@ -50,5 +50,5 @@ tfoot td {
 }
 
 .selected {
-  background-color: #c3e6cb;
+  background-color: var(--highlight-color);
 }

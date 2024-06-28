@@ -19,7 +19,6 @@ export class UserService {
   getUsernameByEmail(email: string): Observable<UsuarioGenerico> {
     return collectionData(this.userCollection).pipe(
       map((data : any )=> {
-        
         const user = data.find((user: any) => user.Email == email);
         return user ;  // Devuelve el nombre de usuario o null si no se encuentra
       })

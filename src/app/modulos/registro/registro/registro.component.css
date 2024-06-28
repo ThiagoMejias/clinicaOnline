@@ -1,14 +1,48 @@
+.container-checks {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #007bff; /* Color del checkbox cuando está seleccionado */
+}
+
+.checkbox-label input[type="checkbox"]:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
 .container-form{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 80vw;
+}
+.container-registro{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
 }
 
 
 .container-checks{
     display: flex;
-    
 }
 
 

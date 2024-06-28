@@ -16,6 +16,7 @@ export class GestionUsuariosComponent {
   usersLimpios : any[] = [];
   usersParaTabla : any[] =[];
   openUserForm : boolean = false;
+  loading : boolean = false;
   constructor(private _usuariosService: UserService) {
     
   }
