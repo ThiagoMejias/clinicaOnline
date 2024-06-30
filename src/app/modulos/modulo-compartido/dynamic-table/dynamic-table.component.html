@@ -1,7 +1,7 @@
 <table style="text-transform: uppercase;" >
     <thead>
       <tr>
-        <th *ngFor="let column of columns"  [ngClass]="{ 'hidden': !isColumnVisible(column) }" >{{ column }}</th>
+        <th *ngFor="let column of columns"  [hidden]="!isColumnVisible(column)" >{{ column }}</th>
       </tr>
     </thead>
     <tbody>

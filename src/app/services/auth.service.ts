@@ -75,7 +75,14 @@ export class AuthService {
       console.log(user);  
       
       return user;
-    } catch (error) {
+    } catch (error :any) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: this.getErrorMessage(error.code),
+        showConfirmButton: false,
+        timer: 1500
+      })
       return null;
     }
   }

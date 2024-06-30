@@ -1,10 +1,12 @@
+import { UsuarioGenerico } from "./Usuarios";
 
 export interface Turno {
     id?: string;
     especialidad: string;
-    especialista: string;
-    fecha: string;
-    horario: string;
-    paciente: string;
+    especialista: UsuarioGenerico;
+    fecha: Date;
+    hora: string;
+    paciente?: UsuarioGenerico; 
+    fechaFormateada? : string;
   }
   

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, deleteDoc, doc, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, deleteDoc, doc, onSnapshot, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Turno } from '../interfaces/Turno';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { UsuarioGenerico } from '../interfaces/Usuarios';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,40 @@ export class TurnosService {
   constructor(private fs: Firestore) { }
 
   addTurno(newTurno: Turno) {
-    const turnoDoc = doc(this.dataRef);
-    newTurno.id = turnoDoc.id;
-    setDoc(turnoDoc, newTurno);
+    try{
+      const turnoDoc = doc(this.dataRef);
+      newTurno.id = turnoDoc.id;
+      setDoc(turnoDoc, newTurno);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+
+  getTurnosPorEspecialistaEspecialidad(Especialista : UsuarioGenerico|null, especialidad : string|null): Observable<Turno[]> {
+    if(Especialista && especialidad) {
+      return new Observable<Turno[]>((observer) => {
+        const q = query(
+          this.dataRef, 
+          where('especialista.id', '==', Especialista.id),
+          where('especialidad', '==', especialidad)
+        );
+      onSnapshot(q, (snap) => {
+        const Listas: Turno[] = [];
+        snap.docChanges().forEach(x => {
+          
+          const one = x.doc.data() as Turno;
+          console.log(one);
+          
+          Listas.push(one);
+        });
+        observer.next(Listas);
+      });
+    });
+    }else {
+      return of([]);
+    }
   }
 
   getTurnos(): Observable<Turno[]> {
@@ -39,7 +71,7 @@ export class TurnosService {
       especialidad: turno.especialidad,
       especialista: turno.especialista,
       fecha: turno.fecha,
-      horario: turno.horario,
+      hora: turno.hora,
       paciente: turno.paciente
     });
   }

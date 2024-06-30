@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: '', component: SolicitarTurnoComponent}
+];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

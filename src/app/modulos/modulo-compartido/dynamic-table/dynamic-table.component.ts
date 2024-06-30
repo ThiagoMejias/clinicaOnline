@@ -39,6 +39,8 @@ export class DynamicTableComponent {
   }
 
   isColumnVisible(column: string): boolean {
-    return column !== 'id';
+    console.log(column);
+    
+    return column.toLocaleLowerCase() != 'id';
   }
 }

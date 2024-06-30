@@ -1,8 +1,9 @@
 
 import { Injectable } from '@angular/core';
-import { Firestore, collection, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot, doc, updateDoc, deleteDoc, setDoc, where, query } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UsuarioGenerico } from '../interfaces/Usuarios';
+import { HorariosService } from './horarios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,40 @@ export class UsuarioGenericoService {
     });
   }
 
+  getPacientes(): Observable<UsuarioGenerico[]> {
+    const q = query(
+      this.dataRef,
+      where('Rol', '==', "paciente")
+    );
+    return new Observable<UsuarioGenerico[]>((observer) => {
+      onSnapshot(q ,(snap) => {
+        const UsuarioGrals: UsuarioGenerico[] = [];
+        snap.docChanges().forEach(x => {
+          const one = x.doc.data() as UsuarioGenerico;
+          UsuarioGrals.push(one);
+        });
+        observer.next(UsuarioGrals);
+      });
+    });
+  }
+
+  
+  getEpecialistas(): Observable<UsuarioGenerico[]> {
+    const q = query(
+      this.dataRef,
+      where('Rol', '==', "especialista")
+    );
+    return new Observable<UsuarioGenerico[]>((observer) => {
+      onSnapshot(q ,(snap) => {
+        const UsuarioGrals: UsuarioGenerico[] = [];
+        snap.docChanges().forEach(x => {
+          const one = x.doc.data() as UsuarioGenerico;
+          UsuarioGrals.push(one);
+        });
+        observer.next(UsuarioGrals);
+      });
+    });
+  }
   modificar(dato: UsuarioGenerico) {
     const docs = doc(this.dataRef, dato.id);
     updateDoc(docs, {

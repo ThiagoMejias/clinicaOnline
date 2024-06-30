@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
 import { UsuarioGenerico } from '../../../interfaces/Usuarios';
 import { FranjaHoraria } from '../../../interfaces/franja-horaria';
 import { Horarios } from '../../../interfaces/horarios';
@@ -13,17 +13,12 @@ import Swal from 'sweetalert2';
 export class MisHorariosComponent implements OnInit {
   
   ngOnInit(): void {
-    this.loading = true;
-    this._horariosService.getHorariosByEspecialista(this.usuario.id).subscribe((horarios : any)=>{
-        console.log(horarios);
-        this.Horarios = horarios;
-        this.loading = false;
-      }
-    )
+    this.cargarHorarios();
   }
 
   @Input() usuario!: UsuarioGenerico;
   private  Horarios!: Horarios[];
+  controllerRefresh : boolean = true;
   private _horariosService = inject(HorariosService);
   public loading : boolean = false;
   selectedCells: Set<string> = new Set();
@@ -32,11 +27,34 @@ export class MisHorariosComponent implements OnInit {
   horas = horas;
   dias = dias;
   selectedFranjas: FranjaHoraria[] = [];
+  constructor(private cdr: ChangeDetectorRef) {
+    
+  }
+
+  cargarHorarios(): void {
+    console.log("cargar horarios");
+    
+    this.loading = true;
+    this._horariosService.getHorariosByEspecialista(this.usuario.id).subscribe({
+      next: (horarios: Horarios[]) => {
+        console.log(horarios);
+        
+        this.Horarios = horarios;
+        this.loading = false;
+        this.controllerRefresh = !this.controllerRefresh;
+        this.controllerRefresh = !this.controllerRefresh;
+
+      },
+      error: (error: any) => {
+        console.error('Error al cargar los horarios:', error);
+        this.loading = false;
+      }
+    });
+  }
 
   handleMouseDown(day: string, hour: string) {
     this.isSelecting = true;
     this.toggleCellSelection(day, hour);
-    console.log(this.usuario.Especialidades.forEach((e: any) => console.log(e)));
   }
 
   handleMouseEnter(day: string, hour: string) {
@@ -50,7 +68,7 @@ export class MisHorariosComponent implements OnInit {
   }
 
   toggleCellSelection(day: string, hour: string) {
-    if(!this.horarioOcupado(day, hour)) {
+    if(!this.horarioOcupado(day, hour) && this.selectedEspecialidad != '') {
       const cell = `${day}-${hour}`;
       if (this.selectedCells.has(cell)) {
         this.selectedCells.delete(cell);
@@ -73,7 +91,7 @@ export class MisHorariosComponent implements OnInit {
       this.Horarios.forEach((horario : Horarios) => {
       
         if(horario.Especialidad == this.selectedEspecialidad){
-          horario.franjaHoaria.forEach(franja => {
+          horario.franjaHoraria.forEach(franja => {
             const dayAbbr = Object.keys(diasCompletos).find(key => diasCompletos[key] === franja.Dia);
             if (dayAbbr) {
               const cell = `${dayAbbr}-${franja.Hora}`;
@@ -82,7 +100,7 @@ export class MisHorariosComponent implements OnInit {
             }
           });
         } else {
-          horario.franjaHoaria.forEach(franja => {
+          horario.franjaHoraria.forEach(franja => {
             const dayAbbr = Object.keys(diasCompletos).find(key => diasCompletos[key] === franja.Dia);
             if (dayAbbr) {
               const cell = `${dayAbbr}-${franja.Hora}`;
@@ -107,36 +125,64 @@ export class MisHorariosComponent implements OnInit {
     this.selectedFranjas = this.selectedFranjas.filter(f => f.Dia !== diasCompletos[day] || f.Hora !== hour);
   }
 
-  guardarHorarios() {
-    const horarios: Horarios = {
-      Especialista: this.usuario,
-      Especialidad: this.selectedEspecialidad,
-      franjaHoaria: this.selectedFranjas
-    };
-    this._horariosService.addEspecialidadHorarios(horarios);
-    Swal.fire({
-      title: 'Éxito',
-      text: `Sus horarios fueron cambiados correctamente!`,
-      icon: 'success'
-    })
+  async guardarHorarios() {
+    if(this.selectedEspecialidad!= '')
+    {
+        this.loading = true;
+
+        if(await this._horariosService.updateHorarios(this.usuario,this.selectedEspecialidad,this.selectedFranjas)){
+          Swal.fire({
+            title: 'Éxito',
+            text: `Sus horarios fueron cambiados correctamente!`,
+            icon: 'success'
+            
+          }).then(()=> {this.cargarHorarios(); this.selectedEspecialidad = ''})
+          
+        }else{
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Valide los datos',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        this.especialidadChange();
+        this.loading = false;
+    }else{
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Debe seleccionar una especialidad',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   }
 
   horarioOcupado(day: string, hour: string): boolean {
-    return this.Horarios.some(horario =>
-      horario.Especialidad !== this.selectedEspecialidad &&
-      horario.franjaHoaria.some(franja =>
-        franja.Dia === diasCompletos[day] && franja.Hora === hour
-      )
-    );
+    if(this.Horarios){
+      return this.Horarios.some(horario =>
+        horario.Especialidad !== this.selectedEspecialidad &&
+        horario.franjaHoraria.some(franja =>
+          franja.Dia === diasCompletos[day] && franja.Hora === hour
+        )
+      );
+    }
+    return false;
+   
   }
   
 
   isSelectable(day: string, hour: string): boolean {
-    const horario = this.Horarios.find(h => h.Especialidad === this.selectedEspecialidad);
-    if (!horario) return false;
-    console.log(horario.franjaHoaria.some(f => f.Dia === diasCompletos[day] && f.Hora === hour));
-    
-    return horario.franjaHoaria.some(f => f.Dia === diasCompletos[day] && f.Hora === hour);
+    if(this.Horarios){
+      const horario = this.Horarios.find(h => h.Especialidad === this.selectedEspecialidad);
+      if (!horario) return false;
+      
+      return horario.franjaHoraria.some(f => f.Dia === diasCompletos[day] && f.Hora === hour);
+    }
+    return false;
+   
   }
   getDateFromDay(day: string): Date {
     const today = new Date();
@@ -144,5 +190,21 @@ export class MisHorariosComponent implements OnInit {
     const targetDate = new Date(today.setDate(today.getDate() + ((dayIndex - today.getDay() + 7) % 7)));
     return targetDate;
   }
+  seleccionarCeldas() {
+    this.selectedCells.clear();
+  
+    this.Horarios.forEach((horario: Horarios) => {
+      if (horario.Especialidad === this.selectedEspecialidad) {
+        horario.franjaHoraria.forEach(franja => {
+          const dayAbbr = Object.keys(diasCompletos).find(key => diasCompletos[key] === franja.Dia);
+          if (dayAbbr) {
+            const cell = `${dayAbbr}-${franja.Hora}`;
+            this.selectedCells.add(cell); // Agregar la celda seleccionada
+          }
+        });
+      }
+    });
+  }
 }
+
 

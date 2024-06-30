@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserModalComponent } from './user-modal/user-modal.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
         UsuarioRoutingModule,
         ReactiveFormsModule,
         FormsModule ,
+        ModuloCompartidoModule,
         MatIconModule
     ]
 })

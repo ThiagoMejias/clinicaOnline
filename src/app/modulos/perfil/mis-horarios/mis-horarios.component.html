@@ -5,32 +5,39 @@
       @if(this.loading){
         <spinner></spinner>
       }@else{
-        <div class="mb-4">
-          <label for="especialidad" class="block text-sm font-medium text-gray-700">
-            Especialidad
-          </label>
-            <select
-            id="especialidad"
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
-            [(ngModel)]="selectedEspecialidad" (change)="especialidadChange()">
-            <option *ngFor="let especialidad of usuario.Especialidades" [value]="especialidad.especialidad">
-              {{ especialidad.especialidad }}
-            </option>
-          </select>
+        <div class="mb-4  ">
+          <div class="d-flex justify-center w-100">
+              <div class="w-50 m-2">
+                <label for="especialidad" class="block text-sm font-medium text-gray-700">
+                  Especialidad
+                </label>
+                  <select
+                  id="especialidad"
+                  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                  [(ngModel)]="selectedEspecialidad" (change)="especialidadChange()">
+                  <option *ngFor="let especialidad of usuario.Especialidades" [value]="especialidad">
+                    {{ especialidad }}
+                  </option>
+                </select>
+              </div>
+             <div class="w-50 m-3">
+               <button (click)="guardarHorarios()" class="mt-3 bg-blue-600 text-white text-align-center rounded items-center justify-center"><mat-icon class="mt-1 btn-icon">check</mat-icon></button>
+             </div>
+          </div>
         </div>
       }
    
-      <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-200">
+      <div class="overflow-x-auto w-full">
+        <table  class="w-full border-collapse border border-gray-200">
           <thead>
             <tr>
-              <th class="border border-gray-200 p-2"></th>
-              <th *ngFor="let hour of horas" class="border border-gray-200 p-2">{{ hour }}</th>
+              <th class="border border-gray-200 header p-2"></th>
+              <th *ngFor="let hour of horas" class="border border-gray-200 header p-2">{{ hour }}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let day of dias">
-              <td class="border border-gray-200 p-2">{{ day }}</td>
+              <td class="border border-gray-200 p-2 header">{{ day }}</td>
               <td
                 *ngFor="let hour of horas"
                 class="border border-gray-200 p-2"
@@ -48,7 +55,7 @@
           </tbody>
         </table>
       </div>
-      <button (click)="guardarHorarios()" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Guardar Horarios</button>
+      
     </div>
   </div>
   

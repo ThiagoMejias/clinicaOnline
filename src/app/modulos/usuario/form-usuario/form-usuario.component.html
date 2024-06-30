@@ -73,23 +73,23 @@
     <div *ngIf="this.rol == 'especialista'" class="form-row">
       <div class="form-group col-md-6">
         <label for="especialidad">Especialidad</label>
-        <select id="especialidad" formControlName="Especialidades" class="form-control" multiple>
+        <select multiple [(ngModel)]="especialidadesSeleccionadas"  [ngModelOptions]="{standalone: true}" class="form-control" (ngModelChange)="onEspecialidadChange()">
+
           <option *ngFor="let especialidad of especialidades" [value]="especialidad.especialidad">{{ especialidad.especialidad }}</option>
         </select>
-        <button type="button" class="btn btn-sm btn-primary mt-2" (click)="toggleCampoNuevaEspecialidad()">Nueva especialidad</button>
       </div>
       <div class="form-group col-md-6" *ngIf="mostrarCampoNuevaEspecialidad" @enterAnimation>
         <label for="nuevaEspecialidad">Agregar nueva especialidad</label>
         <input id="nuevaEspecialidad" [(ngModel)]="nuevaEspecialidad" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Nueva especialidad">
         <button type="button" class="btn btn-primary mt-2" (click)="agregarEspecialidad()">Agregar Especialidad</button>
       </div>
-    
+
     </div>
   
     <div class="form-row">
       <div class="form-group">
         <label for="imagen">Imagen de Perfil</label>
-        <input type="file" id="imagen" (change)="onFile2Selected($event)" formControlName="Imagen" class="form-control" required>
+        <input type="file" id="imagen" (change)="onFileSelected($event)" formControlName="Imagen" class="form-control" required>
         <div *ngIf="registerForm.get('Imagen')?.invalid && registerForm.get('Imagen')?.touched">
           <small class="text-danger">Imagen de perfil es requerida.</small>
         </div>
@@ -98,14 +98,17 @@
     <div class="form-row">
       <div *ngIf="this.rol == 'especialista'" class="form-group">
         <label for="imagen2">Segunda imagen </label>
-        <input type="file" id="imagen2" (change)="onFileSelected($event)" formControlName="Imagen2" class="form-control"  required>
+        <input type="file" id="imagen2" (change)="onFile2Selected($event)" formControlName="Imagen2" class="form-control"  required>
         <div *ngIf="registerForm.get('Imagen2')?.invalid && registerForm.get('Imagen2')?.touched">
           <small class="text-danger">Imagen de perfil son requeridas.</small>
         </div>
       </div>
     </div>
- 
-    <button type="submit" class="btn btn-primary mt-5">Registrar</button>
+    @if(loading){
+      <spinner></spinner>
+    }@else{
+      <button type="submit" class="btn btn-primary mt-5">Registrar</button>
+    }
   </form>
   
 </div>

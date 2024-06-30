@@ -1,7 +1,9 @@
 .flex {
     display: flex;
   }
-  
+.header{
+  background-color: var(--secondary-color);
+}
   .flex-col {
     flex-direction: column;
   }
@@ -21,7 +23,7 @@
   .w-full {
     width: 100%;
   }
-  
+
   .max-w-4xl {
     max-width: 56rem;
   }

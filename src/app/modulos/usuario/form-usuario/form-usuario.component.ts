@@ -43,7 +43,7 @@ export class FormUsuarioComponent implements OnChanges {
     Imagen2: '',
     ObraSocial: '',
   };
-  
+  especialidadesSeleccionadas = [];
   mostrarCampoNuevaEspecialidad : boolean = false;
   public registerForm!: FormGroup;
   nuevaEspecialidad: string = '';
@@ -52,6 +52,7 @@ export class FormUsuarioComponent implements OnChanges {
   public otra: FormControl = new FormControl('', Validators.required);
   private primeraImagen! : File;
   private segundaImagen! : File;
+  public loading : boolean = false;
   
 
   constructor(private fb: FormBuilder, private _especialidadService : EspecialidadService,private _validatorService : ValidatorsService,
@@ -65,7 +66,6 @@ export class FormUsuarioComponent implements OnChanges {
       Email: ['', [Validators.required, Validators.pattern(this._validatorService.emailPattern)]],
       Password: ['', [Validators.required]],
       Imagen: ['', [Validators.required]],
-      Especialidades: this.fb.array(this.especialidades, [Validators.required, Validators.minLength(1)]),
       Imagen2: ['', [Validators.required]],
       ObraSocial: ['', [Validators.required]],
     });
@@ -93,7 +93,7 @@ export class FormUsuarioComponent implements OnChanges {
   onFile2Selected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
-      this.primeraImagen = inputElement.files[0];
+      this.segundaImagen = inputElement.files[0];
     }
   }
     
@@ -117,15 +117,18 @@ export class FormUsuarioComponent implements OnChanges {
     this._especialidadService.getData().subscribe(data => {
       this.especialidades = data;
         
-      this.registerForm.setControl('Especialidades', this.fb.array(this.especialidades));
     });
 
 
   }
 
   
+  onEspecialidadChange(): void {
+    console.log(this.especialidadesSeleccionadas);
+    
 
 
+  }
 
  
 
@@ -134,7 +137,6 @@ export class FormUsuarioComponent implements OnChanges {
     
     this.registerForm.get('ObraSocial')?.clearValidators();
     this.registerForm.get('Imagen2')?.clearValidators();  
-    this.registerForm.get('Especialidades')?.clearValidators();
     
     if (rol === 'paciente') {
     
@@ -142,13 +144,11 @@ export class FormUsuarioComponent implements OnChanges {
 
     } else if (rol === 'especialista') {
       
-      this.registerForm.get('Especialidades')?.setValidators([Validators.required, Validators.minLength(1)]);
       this.registerForm.get('Imagen2')?.setValidators([Validators.required]);
     }
   
     this.registerForm.get('ObraSocial')?.updateValueAndValidity();
     this.registerForm.get('Imagen2')?.updateValueAndValidity();
-    this.registerForm.get('Especialidades')?.updateValueAndValidity();
   }
   
 
@@ -156,22 +156,38 @@ export class FormUsuarioComponent implements OnChanges {
     return this._validatorService.isValidField(this.registerForm, field);
   }
 
-  onDeleteEspecialidades(i : number): void{
 
-  }
 
   async crearUsuario() : Promise<void>{
-      
+      this.loading = true;
       this.usuarioGenerico = this.registerForm.value;
+      if(this.rol == "especialista" && this.especialidadesSeleccionadas.length < 1){
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Debe seleccionar una especialidad',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.loading = false
+        return;
+      }
+
       if(this.registerForm.valid)
       {
+        this.usuarioGenerico.Rol = this.rol;
         let imagenesSubidasCorrectamente = await this.subirArchivos(this.usuarioGenerico);
         if(imagenesSubidasCorrectamente){
-          this.usuarioGenerico.Rol = this.rol;
-
           console.log(this.usuarioGenerico);
-  
-          this.usuarioGenerico.Autorizado = this.rol == 'especialista' ? false : true;
+          
+          if(this.rol == 'especialista'){
+            this.usuarioGenerico.Especialidades = this.especialidadesSeleccionadas;
+            this.usuarioGenerico.Autorizado = false;
+          }else{
+            this.usuarioGenerico.Autorizado = true;
+            this.usuarioGenerico.Especialidades = [];
+          }
+
           this.getUsuario.emit(this.usuarioGenerico);
         }
       
@@ -184,6 +200,8 @@ export class FormUsuarioComponent implements OnChanges {
                 timer: 1500
         })
       }
+      this.loading = false;
+
 
   }
 
@@ -193,7 +211,7 @@ export class FormUsuarioComponent implements OnChanges {
         usuario.Imagen = await this._firebaseStorageService.subirImagen(`${this.usuarioGenerico.Dni}_${Date.now().toString()}`, this.primeraImagen);
       }
       
-      if (this.usuarioGenerico.Rol === 'especialista' && this.segundaImagen) {
+      if (this.usuarioGenerico.Rol == 'especialista' && this.segundaImagen) {
         usuario.Imagen2 = await this._firebaseStorageService.subirImagen(`${this.usuarioGenerico.Dni}_2_${Date.now().toString()}`, this.segundaImagen);
       }
       

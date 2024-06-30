@@ -8,6 +8,7 @@ import { MisHorariosComponent } from './mis-horarios/mis-horarios.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.module';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -22,6 +23,7 @@ import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.m
     PerfilRoutingModule,
     MatToolbarModule,
     FormsModule,
+    MatIconModule,
     ModuloCompartidoModule
     
   ]

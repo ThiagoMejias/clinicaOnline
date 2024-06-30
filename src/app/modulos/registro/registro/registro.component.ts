@@ -18,6 +18,7 @@ export class RegistroComponent implements OnInit {
   public rol: string = '';
   public usuario!: UsuarioGenerico;
   public ocultar: boolean = false;
+  loading : boolean = false;
   public selectedRole = '';
   roles = {
     especialista: false,
@@ -73,6 +74,7 @@ export class RegistroComponent implements OnInit {
   async getUsuario(event: UsuarioGenerico) {
     this.usuario = event;
     console.log(this.usuario);
+    this.loading = true;
     let usuario = await this.auth.registerUser(this.usuario.Email, this.usuario.Password);
     if(usuario){
       this._userService.addData(this.usuario);
@@ -85,6 +87,7 @@ export class RegistroComponent implements OnInit {
         cancelButtonColor: '#d33',
         confirmButtonText: 'ok'
       })
+      this.loading = false;
       this.router.navigate(['/welcome']);
     } 
     

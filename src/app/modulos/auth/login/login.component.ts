@@ -48,43 +48,44 @@ export class LoginComponent {
     if (this.verifyFields()) {
       this.loading = true;
       let user = await this.authService.loginUser(this.email, this.password);
-      if(user.emailVerified){
+      if(user != null){
+        if(user.emailVerified){
 
-        this._userService.getUsernameByEmail(user.email).subscribe(
-          (user: UsuarioGenerico) => {
-            if (user.Autorizado) {
-              this.router.navigate(['/miPerfil']);
-              this._userService.guardarUsuario(user);
-            } else {
+          this._userService.getUsernameByEmail(user.email).subscribe(
+            (user: UsuarioGenerico) => {
+              if (user.Autorizado) {
+                this.router.navigate(['/miPerfil']);
+                this._userService.guardarUsuario(user);
+              } else {
+                Swal.fire({
+                  title: 'Error',
+                  text: 'Debe ser autorizado por el administrador',
+                  background: 'white',
+                  icon: 'error'
+                });
+              }
+              this.loading = false;
+            },
+            error => {
+              console.error('Error obteniendo datos de usuario:', error);
               Swal.fire({
                 title: 'Error',
-                text: 'Debe ser autorizado por el administrador',
+                text: 'Ocurrió un error al obtener los datos del usuario',
                 background: 'white',
                 icon: 'error'
               });
             }
-            this.loading = false;
-          },
-          error => {
-            console.error('Error obteniendo datos de usuario:', error);
-            Swal.fire({
-              title: 'Error',
-              text: 'Ocurrió un error al obtener los datos del usuario',
-              background: 'white',
-              icon: 'error'
-            });
-          }
-        );
-      }else{
-        Swal.fire({
-          title: 'Error',
-          text: 'Debe verificar el correo electronico, con el mail que le llego a su correo.',
-          background: 'white',
-          icon: 'error'
-        });
+          );
+        }else{
+          Swal.fire({
+            title: 'Error',
+            text: 'Debe verificar el correo electronico, con el mail que le llego a su correo.',
+            background: 'white',
+            icon: 'error'
+          });
+        }
       }
-
-
+      this.loading = false;
   }
 }
 

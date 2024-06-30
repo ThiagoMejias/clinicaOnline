@@ -10,13 +10,13 @@
                 <li class="nav-item" >
                     <a class="nav-link" href="gestionUsuarios">Gestion de usuarios</a>
                   </li>
-                 
-                  <li class="nav-item" >
-                    <a class="nav-link" routerLink="misTurnos"
-                      routerLinkActive="active">Turnos</a>
-                  </li>
+                }
+               @if(user.Rol == 'administrador' || user.Rol == 'paciente'){
+                <li class="nav-item" >
+                  <a class="nav-link" routerLink="misTurnos"
+                    routerLinkActive="active">Turnos</a>
+                </li>
                }
-               
       
               <!-- administrador | Paciente -->
       

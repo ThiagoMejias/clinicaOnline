@@ -5,5 +5,5 @@ export interface Horarios {
   id? : string;
   Especialista: UsuarioGenerico;
   Especialidad : String;
-  franjaHoaria : FranjaHoraria[];
+  franjaHoraria : FranjaHoraria[];
 }
