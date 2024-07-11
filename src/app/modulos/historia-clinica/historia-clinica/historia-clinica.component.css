@@ -1,0 +1,104 @@
+/* Estilos para el componente de historia clínica */
+
+/* Contenedor para centrar el componente */
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Estilos para el card */
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .border {
+    border-width: 1px;
+  }
+  
+  .bg-card {
+    background-color: #ffffff; /* Color de fondo del card */
+  }
+  
+  .text-card-foreground {
+    color: #333333; /* Color de texto principal */
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  }
+  
+  /* Espaciado interno */
+  .p-6 {
+    padding: 1.5rem;
+  }
+  
+  /* Títulos */
+  .text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  /* Etiquetas y texto */
+  .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  
+  .font-medium {
+    font-weight: 500;
+  }
+  
+  /* Tabla de atenciones */
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
+  
+  .w-full {
+    width: 80%;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  .th {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom-width: 1px;
+    border-bottom-color: #cbd5e0;
+  }
+  
+  .td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom-width: 1px;
+    border-bottom-color: #cbd5e0;
+  }
+  
+  /* Estilos para filas de la tabla */
+  .tr {
+    transition-property: background-color;
+    transition-duration: 150ms;
+  }
+  
+  .hover\:bg-gray-200:hover {
+    background-color: #edf2f7; /* Color de fondo al pasar el ratón */
+  }
+  

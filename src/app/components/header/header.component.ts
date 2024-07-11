@@ -19,11 +19,8 @@ export class HeaderComponent {
   ngOnInit(): void {
     this._userService.obtenerUsuarioObs().subscribe(
       (user: UsuarioGenerico | null) => {
-        console.log(user);
-        
           this.user = user;
           this.userLogin = !!user;
-       
       }
     );
   }

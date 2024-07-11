@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.module';
 import { MatIconModule } from '@angular/material/icon';
+import { HistoriaClinicaModule } from '../historia-clinica/historia-clinica.module';
 
 
 
@@ -24,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     FormsModule,
     MatIconModule,
-    ModuloCompartidoModule
+    ModuloCompartidoModule,
+    HistoriaClinicaModule
     
   ]
 })

@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { HistoriaClinicaModule } from '../historia-clinica/historia-clinica.module';
 
 
 
@@ -28,7 +29,8 @@ import { FormsModule } from '@angular/forms';
         MatToolbarModule,
         MatButtonModule,
         MatInputModule,
-        FormsModule
+        FormsModule,
+        HistoriaClinicaModule
     ]
 })
 export class GestionUsuariosModule { }

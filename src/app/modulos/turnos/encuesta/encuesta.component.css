@@ -1,0 +1,56 @@
+.encuesta-experiencia {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.encuesta-experiencia h3 {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.encuesta-experiencia p {
+  color: var(--text-secondary-color);
+  font-size: 0.875rem;
+  margin-bottom: 15px;
+}
+
+.encuesta-experiencia label {
+  color: var(--text-primary-color);
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.encuesta-experiencia textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid var(--text-secondary-color);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  color: var(--text-primary-color);
+  resize: vertical;
+}
+
+.encuesta-experiencia button[type="submit"] {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.encuesta-experiencia button[type="submit"]:hover {
+  background-color: var(--highlight-color);
+}

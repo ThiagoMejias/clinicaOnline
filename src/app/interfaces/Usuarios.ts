@@ -1,3 +1,5 @@
+import { Turno } from "./Turno";
+
 export interface UsuarioGenerico{
     id: string;
     Nombre: string;
@@ -30,4 +32,10 @@ export interface UsuarioGenerico{
     Imagen: string;
     Imagen2: string;
     ObraSocial: string;
+}
+
+
+export interface PacienteConTurnos {
+  paciente: UsuarioGenerico;
+  turnos: Turno[];
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, QuerySnapshot, collection, doc, getDocs, onSnapshot, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Especialidad } from '../interfaces/Especialidad';
 import { Horarios } from '../interfaces/horarios';
 import { FranjaHoraria } from '../interfaces/franja-horaria';
 import { UsuarioGenerico } from '../interfaces/Usuarios';

@@ -1,0 +1,165 @@
+
+@if(!loading){
+    @if(encuesta)
+    {
+        <app-encuesta [turno]="this.turnoSeleccionado" (close)="encuestaCerrada()"  class="m-5"></app-encuesta>
+    }@else {
+
+         @if(historicoCliente){
+            <app-alta-historia-clinica [turno]="this.turnoSeleccionado!" (close)="altaHistoriaCerrada()" ></app-alta-historia-clinica>
+         }@else{
+            <div class="container d-flex text-align-center">
+
+                <div class="flex container-MisTurnos items-center justify-between">
+                    <h1 class="title ">Mis turnos médicos</h1>
+                    @if(this.usuario?.Rol == 'administrador'){
+                        <button type="button" class="btn btn-outline m-5" (click)="descargaTurnosPdf()">
+                            Descargar informe de turnos
+                        </button>
+                    }
+                    <div class="flex items-center space-x-4">
+                        <!-- Botón desplegable para especialidades -->
+                        <div class="d-flex ">
+                            <div class="search-container">
+                                <mat-icon class="search-icon">search</mat-icon>
+                                <input
+                                class="search-input"
+                                matInput
+                                type="search"
+                                placeholder="Busqueda general"
+                                [(ngModel)]="this.searchQuery"
+                                (ngModelChange)="filtrarTurnosGeneral()"/>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline w-48" (click)="toggleEspecialidadesDropdown()">
+                                    {{ especialidadSeleccionada ? especialidadSeleccionada : 'Seleccionar especialidad' }}
+                                </button>
+                                <div *ngIf="especialidadesDropdownOpen"
+                                    class="absolute bg-white border border-gray-300 mt-2 rounded-lg shadow-lg z-10 w-48">
+                                    <div class="cursor-pointer px-4 py-2 hover:bg-gray-100" (click)="seleccionarEspecialidad('')">
+                                        Seleccionar especialidad</div>
+                                    <div *ngFor="let especialidad of especialidadesFiltradas"
+                                        class="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                                        (click)="seleccionarEspecialidad(especialidad)">
+                                        {{ especialidad }}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div *ngIf="this.usuario?.Rol == 'paciente' || this.usuario?.Rol == 'administrador'">
+                                <button type="button" class="btn btn-outline w-48" (click)="toggleEspecialistasDropdown()">
+                                    {{ especialistaSeleccionado ? especialistaSeleccionado.Nombre + ' ' +
+                                    especialistaSeleccionado.Apellido : 'Seleccionar especialista' }}
+                                </button>
+                                <div *ngIf="especialistasDropdownOpen"
+                                    class="absolute bg-white border border-gray-300 mt-2 rounded-lg shadow-lg z-10 w-48">
+                                    <div class="cursor-pointer px-4 py-2 hover:bg-gray-100" (click)="seleccionarEspecialista(null)">
+                                        Seleccionar especialista</div>
+                                    <div *ngFor="let especialista of especialistasFiltrados"
+                                        class="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                                        (click)="seleccionarEspecialista(especialista)">
+                                        {{ especialista.Nombre }} {{ especialista.Apellido }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="this.usuario?.Rol == 'especialista'">
+                                <button type="button" class="btn btn-outline w-48" (click)="togglePacientesDropdown()">
+                                    {{ pacienteSeleccionado ? pacienteSeleccionado.Nombre + ' ' + pacienteSeleccionado.Apellido : 'Seleccionar paciente' }}
+                                </button>
+                                <div *ngIf="pacientesDropdownOpen" class="absolute bg-white border border-gray-300 mt-2 rounded-lg shadow-lg z-10 w-48">
+                                    <div class="cursor-pointer px-4 py-2 hover:bg-gray-100" (click)="seleccionarPaciente(null)">
+                                        Seleccionar paciente
+                                    </div>
+                                    <div *ngFor="let paciente of pacientesFiltrados" class="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                                        (click)="seleccionarPaciente(paciente)">
+                                        {{ paciente.Nombre }} {{ paciente.Apellido }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    @if(this.turnos.length < 1){
+                        <p class="mt-4">No tiene turnos asignados!</p>
+                    }
+                    <div *ngIf="mostrarComentario" class="comment-section mt-4">
+                        <textarea [(ngModel)]="comentarioCancelacion" placeholder="Agrega un comentario"></textarea>
+                        <button class="btn btn-primary mt-2" (click)="guardarComentario(comentarioCancelacion)">Confirmar </button>
+                    </div>
+                    <div class="grid">
+                        
+                        <div *ngFor="let turno of turnosFiltrados" class="card turno">
+                            <div class="card-header">
+                                <div class="flex items-center justify-between">
+                                    <div *ngIf="mostrarCalificacion && turnoSeleccionado!.id == turno.id" >
+                                        <label for="estrellas">Calificacion: </label>
+                                        <div class="estrellas">
+                                            <input type="checkbox" id="estrella1" class="estrella"
+                                                (click)="calificar(1)" [disabled]="usuario?.Rol != 'paciente'"
+                                                [checked]="turnoSeleccionado!.calificacion! >= 1">
+                                            <label for="estrella1"></label>
+                                            <input type="checkbox" id="{{turnoSeleccionado!.id}}_estrella2" class="estrella"
+                                                (click)="calificar(2)" [disabled]="usuario?.Rol != 'paciente'"
+                                                [checked]="turnoSeleccionado!.calificacion! >= 2">
+                                            <label for="estrella2"></label>
+                                            <input type="checkbox" id="estrella3" class="estrella"
+                                                (click)="calificar(3)" [disabled]="usuario?.Rol != 'paciente'"
+                                                [checked]="turnoSeleccionado!.calificacion! >= 3">
+                                            <label for="estrella3"></label>
+                                            <input type="checkbox" id="estrella4" class="estrella"
+                                                (click)="calificar(4)" [disabled]="usuario?.Rol != 'paciente'"
+                                                [checked]="turnoSeleccionado!.calificacion! >= 4">
+                                            <label for="estrella4"></label>
+                                            <input type="checkbox" id="estrella5" class="estrella"
+                                                (click)="calificar(5)" [disabled]="usuario?.Rol != 'paciente'"
+                                                [checked]="turnoSeleccionado!.calificacion! >= 5">
+                                            <label for="estrella5"></label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="subtitulo">{{ turno.especialidad }}</h3>
+                                        @if(this.usuario?.Rol == "paciente"  ){
+                                            <p class="turno-date">{{ turno.especialista.Nombre }} {{ turno.especialista.Apellido }} - {{
+                                                turno.fechaFormateada }}</p>
+                                        }@else{
+                                            <p class="turno-date">{{ turno.paciente?.Nombre }} {{ turno.paciente?.Apellido }} - {{
+                                                turno.fechaFormateada }}</p>
+                                        }
+                                    </div>
+                                    <span class="badge ml-auto"   [appEstilosEstados]="turno.estado" >{{ turno.estado }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-content mt-2">
+                                <div class="button-group flex flex-wrap">
+                                    <button *ngIf="(turno.estado != 'finalizado' && turno.estado != 'cancelado' && usuario?.Rol =='paciente') 
+                                    || (usuario?.Rol == 'especialista' || usuario?.Rol == 'administrador') && turno.estado == 'en espera'" class="btn btn-outline"
+                                        (click)="cancelarTurno(turno)">Cancelar turno</button>
+                                    <button *ngIf="usuario?.Rol == 'especialista' && turno.estado == 'en espera'" class="btn btn-outline"
+                                            (click)="rechazarTurno(turno)">Rechazar turno</button>
+                                    <button *ngIf="turno.resenia != '' || turno.comentario != '' " class="btn btn-outline" (click)="revisarDetalle(turno)">
+                                        Ver Detalle</button>
+                                    <button *ngIf="usuario?.Rol == 'especialista' && turno.estado == 'en espera'" class="btn btn-outline"
+                                        (click)="aceptarTurno(turno)">Aceptar turno</button>
+                                    
+                                    <button *ngIf="usuario?.Rol == 'especialista' && turno.estado == 'aceptado'" class="btn btn-outline"
+                                        (click)="finalizarTurno(turno)">Finalizar turno</button>
+                                    <button *ngIf="turno.resenia != '' && turno.estado == 'finalizado' && usuario?.Rol == 'paciente'" class="btn btn-outline" (click)="toggleAtencion(turno)">
+                                            Calificar atención</button>
+                                    <button *ngIf="turno.estado == 'finalizado' && usuario?.Rol == 'paciente'" class="btn btn-outline"
+                                        (click)="encuestaTurno(turno)">Completar encuesta</button>
+                                    <button *ngIf="turno.estado == 'finalizado' && usuario?.Rol == 'especialista' && !turno.historiaClinica" class="btn btn-outline"
+                                        (click)="agregarHistorico(turno)">agregar historica cliente</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        }
+    }
+}@else{
+    <spinner></spinner>
+}
+
+

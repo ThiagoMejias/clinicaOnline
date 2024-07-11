@@ -3,6 +3,8 @@ import { DocumentReference, Firestore, collection,collectionData, doc, updateDoc
 import { Auth,user } from '@angular/fire/auth';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UsuarioGenerico } from '../interfaces/Usuarios';
+import { onSnapshot, setDoc } from 'firebase/firestore';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +16,8 @@ export class UserService {
   firestore = inject(Firestore);
   user$ = user(this.firebaseAuth);
   userCollection = collection(this.firestore, 'Users');
+  ingresosColecction = collection(this.firestore, 'ingresos');
+
   private usuarioSubject: BehaviorSubject<UsuarioGenerico | null> = new BehaviorSubject<UsuarioGenerico | null>(null);
 
   getUsernameByEmail(email: string): Observable<UsuarioGenerico> {
@@ -24,6 +28,15 @@ export class UserService {
       })
     );
   }
+  addIngreso(usuarioGenerico: UsuarioGenerico) {
+    const docs = doc(this.ingresosColecction);
+    const ingresos = {
+      nombre : `${usuarioGenerico.Nombre} ${usuarioGenerico.Apellido}` ,
+      fecha: Date.now() 
+    }
+    setDoc(docs, ingresos);
+  }
+
   
 
   getAll(): Observable<UsuarioGenerico[]> {
@@ -36,7 +49,18 @@ export class UserService {
   guardarUsuario(user : UsuarioGenerico) : boolean {  
     localStorage.setItem('user',JSON.stringify(user));
     this.usuarioSubject.next(user);
+    this.addIngreso(user); 
     return true;
+  }
+
+  getIngresos(): Observable<any[]> {
+    return new Observable<any[]>((observer) => {
+      onSnapshot(this.ingresosColecction, (snapshot) => {
+        const logs: any[] = [];
+        snapshot.forEach(doc => logs.push(doc.data()));
+        observer.next(logs);
+      });
+    });
   }
 
   esAdmin() : boolean {

@@ -1,0 +1,391 @@
+
+  
+  
+  
+  .btn {
+    border: 2px solid transparent;
+    transition: background-color 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .container-MisTurnos{
+    display: flex;
+    flex-direction: column;
+    justify-content: column;
+    align-items: center;
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+  }
+  
+  .btn:hover {
+    background-color: var(--highlight-color);
+    transform: scale(1.05);
+  }
+  
+  .absolute {
+    position: absolute;
+  }
+  
+  .z-10 {
+    z-index: 10;
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .border {
+    border-width: 1px;
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .hover\:bg-gray-100:hover {
+    background-color: #f7fafc;
+  }
+  
+
+
+
+  .container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--background-color);
+    font-family: var(--font-family);
+  }
+  
+
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: var(--text-primary-color);
+  }
+  
+
+  .subtitulo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--text-primary-color);
+  }
+  
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5vw;
+    margin-top: 8vh;
+  }
+  
+ 
+  .especialidad, .especialista {
+    background-color: var(--secondary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  
+  .especialista:hover {
+    background-color: var(--highlight-color);
+    transform: scale(1.05);
+  }
+  
+
+  .turno {
+    background-color: var(--secondary-color);
+  }
+  
+  .turno:hover {
+ 
+    transform: scale(1.05);
+  }
+  
+
+  .turno-date {
+    font-size: 1rem;
+    color: var(--text-primary-color);
+    text-align: center;
+  }
+  
+
+  .card {
+    background-color: var(--secondary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    max-height: 30vh;
+    width: 15vw;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-content {
+    display: flex;
+  }
+  
+  .badge {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+  }
+  
+  .primary {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+  }
+  
+  .success {
+    background-color: var(--highlight-color);
+    color: var(--secondary-color);
+  }
+  
+  .danger {
+    background-color: var(--danger-color);
+    color: var(--secondary-color);
+  }
+
+.comment-section {
+    margin-top: 1rem;
+  }
+  
+  .comment-section textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    background-color: var(--secondary-color);
+    color: var(--text-primary-color);
+    font-size: 1rem;
+    resize: vertical; /* Permite redimensionar verticalmente si es necesario */
+  }
+  
+  .comment-section button {
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .comment-section button:hover {
+    background-color: var(--highlight-color);
+    transform: scale(1.05);
+  }
+  
+  .card {
+    /* Asegúrate de ajustar los estilos según tu configuración de Tailwind CSS */
+    @apply w-full max-w-md mx-auto p-6 sm:p-8;
+  }
+  
+  .card-header {
+    /* Ajusta los estilos del encabezado según sea necesario */
+  }
+  
+  .card-title {
+    @apply text-2xl font-bold;
+  }
+  
+  .card-content {
+    @apply grid gap-6;
+  }
+  
+  .fill-primary {
+    fill: var(--color-primary);
+  }
+  
+  .fill-muted {
+    fill: var(--color-muted);
+  }
+  
+  .stroke-muted-foreground {
+    stroke: var(--color-muted-foreground);
+  }
+  
+  .text-muted-foreground {
+    color: var(--color-muted-foreground);
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  
+  .modal-content {
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 30%;
+    max-height: 40%;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  .btn {
+    border: 2px solid transparent;
+    transition: background-color 0.2s, transform 0.2s, border-color 0.2s;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+.btn:hover {
+    background-color: var(--highlight-color);
+    transform: scale(1.05);
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; /* Ajusta el espacio entre los botones según sea necesario */
+}
+
+.card {
+    background-color: var(--secondary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    max-height: 35vh;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column; /* Asegúrate de que los botones se apilen verticalmente si es necesario */
+}
+
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.primary {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.success {
+    background-color: var(--highlight-color);
+    color: var(--secondary-color);
+}
+
+.danger {
+    background-color: var(--danger-color);
+    color: var(--secondary-color);
+}
+
+.estrellas {
+  display: flex;
+}
+
+.estrella {
+  display: none;
+}
+
+.estrella + label:before {
+  content: "";
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  background-size: cover;
+}
+
+@media (max-width: 768px) {
+  .estrella + label:before {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .estrella + label:before {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.estrella + label:before {
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/trabajopracticofinallaboiv.appspot.com/o/users%2FestrellaVacia.png?alt=media&token=36f0fa19-e589-4b70-a3e4-2e15605209dd');
+}
+
+.estrella:checked + label:before {
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/trabajopracticofinallaboiv.appspot.com/o/users%2FestrellaColoreada.png?alt=media&token=f892b058-9c96-45c3-a8d7-313dc8054a03');
+}  .search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+.search-icon {
+width: 24px; 
+height: 24px; 
+color: #757575; 
+cursor: pointer; 
+transition: color 0.3s ease; 
+}
+
+.search-icon:hover {
+color: #333; 
+}
+search-input {
+  border: none;
+  outline: none;
+  background-color: var(--secondary-color);
+  color: var(--text-primary-color);
+  padding: 5px;
+  font-family: var(--font-family);
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary-color);
+}
+
+.search-input:focus {
+  border-bottom: 2px solid var(--primary-color);
+}

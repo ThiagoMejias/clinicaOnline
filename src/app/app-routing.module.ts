@@ -7,8 +7,13 @@ import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.
 const routes: Routes = [
   { 
     path: '', 
-    redirectTo: 'miPerfil', 
+    redirectTo: 'home', 
     pathMatch: 'full' 
+  },
+  { 
+    path: 'home',
+    loadChildren: () => import('./modulos/home/home.module').then(m => m.HomeModule),
+    canActivate: [authGuard] 
   },
   { 
     path: 'login',
@@ -30,11 +35,22 @@ const routes: Routes = [
   {
     path: 'misTurnos',
     loadChildren : () => import('./modulos/turnos/turnos.module').then(m => m.TurnosModule),
+    canActivate: [authGuard] ,
+    
+  },
+  {
+    path: 'misTurnos/solicitarTurno',
+    loadChildren : () => import('./modulos/turnos/turnos.module').then(m => m.TurnosModule),
     canActivate: [authGuard] 
   },
   {
     path: 'miPerfil',
     loadChildren : () => import('./modulos/perfil/perfil.module').then(m => m.PerfilModule),
+    canActivate: [authGuard] 
+  },
+  {
+    path: 'pacientes',
+    loadChildren : () => import('./modulos/pacientes/pacientes.module').then(m => m.PacientesModule),
     canActivate: [authGuard] 
   },
   { path: 'noAutorizado', component: NoAutorizadoComponent },

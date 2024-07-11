@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UsuarioGenerico } from '../../../interfaces/Usuarios';
 import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
@@ -13,8 +13,13 @@ import Swal from 'sweetalert2';
 export class UserCardComponent {
   @Input() usuario!: UsuarioGenerico;
   @Input() vistaAdmin : boolean = false;
+  @Output() accionRealizada = new EventEmitter<string>();
+ 
   constructor(private _usuarioService: UserService) { }
-
+  accion(accion : string){
+    console.log(accion);
+    this.accionRealizada.emit(accion);
+  }
   toggleAccess() {
     
     this._usuarioService.toggleAccess(this.usuario.id,this.usuario.Autorizado).subscribe(

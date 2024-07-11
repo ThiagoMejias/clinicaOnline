@@ -1,0 +1,36 @@
+<form [formGroup]="formularioEncuesta" class="mt-5" (ngSubmit)="enviarEncuesta()">
+
+  <div class="encuesta-experiencia rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-md">
+    <mat-icon (click)="cerrar()">close</mat-icon>
+    <div class="flex flex-col space-y-4 p-4">
+      <h3 class="text-2xl font-semibold leading-none tracking-tight text-primary-color">Encuesta de Experiencia</h3>
+      <p class="text-sm text-muted-foreground">Ayúdanos a mejorar compartiendo tu experiencia, tiempos de espera y sugerencias.</p>
+      
+      <div class="space-y-4">
+        <div>
+          <label for="experience" class="text-sm font-medium leading-none">Experiencia general</label>
+          <textarea id="experience" formControlName="experienciaGeneral" class="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"></textarea>
+          <div *ngIf="formularioEncuesta.get('experienciaGeneral')?.invalid && formularioEncuesta.get('experienciaGeneral')?.touched" class="text-danger text-sm mt-1">Experiencia general es requerida.</div>
+        </div>
+        
+        <div>
+          <label for="wait-time" class="text-sm font-medium leading-none">Tiempos de espera</label>
+          <textarea id="wait-time" formControlName="tiemposEspera" class="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"></textarea>
+          <div *ngIf="formularioEncuesta.get('tiemposEspera')?.invalid && formularioEncuesta.get('tiemposEspera')?.touched" class="text-danger text-sm mt-1">Tiempos de espera son requeridos.</div>
+        </div>
+        
+        <div>
+          <label for="suggestions" class="text-sm font-medium leading-none">Sugerencias</label>
+          <textarea id="suggestions" formControlName="sugerencias" class="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"></textarea>
+          <div *ngIf="formularioEncuesta.get('sugerencias')?.invalid && formularioEncuesta.get('sugerencias')?.touched" class="text-danger text-sm mt-1">Sugerencias son requeridas.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-4 flex justify-end">
+      <button type="submit" [disabled]="formularioEncuesta.invalid" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+        Enviar
+      </button>
+    </div>
+  </div>
+</form>

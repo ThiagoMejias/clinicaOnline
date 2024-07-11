@@ -4,6 +4,9 @@
   align-items: center;
 }
 form {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/trabajopracticofinallaboiv.appspot.com/o/imagenes%2Fform.png?alt=media&token=de4a99a6-05d6-491f-84ee-cd3a6c51cfb7'); 
+    background-size: cover;
+    background-position: center; 
     margin: 0 auto;
     width: 100%;
     padding: 40px;

@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
-
+import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
 const routes: Routes = [
-  {path: '', component: SolicitarTurnoComponent}
+  {path: '', component: MisTurnosComponent},
+  {path: 'solicitarTurno', component: SolicitarTurnoComponent},
+  
 ];
 
 

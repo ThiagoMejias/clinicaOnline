@@ -8,7 +8,7 @@ import { UserModalComponent } from './user-modal/user-modal.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.module';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
     declarations: [
@@ -26,7 +26,8 @@ import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.m
         ReactiveFormsModule,
         FormsModule ,
         ModuloCompartidoModule,
-        MatIconModule
+        MatIconModule,
+        NgxCaptchaModule
     ]
 })
 export class UsuarioModule { }

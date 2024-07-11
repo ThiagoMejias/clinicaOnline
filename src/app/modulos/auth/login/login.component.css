@@ -1,3 +1,29 @@
+.sidebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px; /* Ajusta el margen derecho según sea necesario */
+}
+
+.avatar-item {
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.avatar:hover {
+  transform: scale(1.1); /* Efecto de escala al pasar el mouse */
+}
+.container-imagenes{
+  width: 300px;
+}
+
 .login-box {
   position: absolute;
   top: 50%;

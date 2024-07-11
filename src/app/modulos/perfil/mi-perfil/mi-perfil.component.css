@@ -31,7 +31,7 @@ body {
 .Titulo {
     font-size: 24px;
     font-weight: bold;
-    color: var(--text-primary-color);
+
     text-align: center;
     margin-bottom: 20px;
     border-bottom: 2px solid var(--text-primary-color);
@@ -40,5 +40,15 @@ body {
 
 .selected {
     color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+}
+.ng-star-inserted {
+  background-color: transparent!important; /* Ajustar según sea necesario */
+  border-bottom: transparent !important;
+}
+
+.containerDescarga{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }

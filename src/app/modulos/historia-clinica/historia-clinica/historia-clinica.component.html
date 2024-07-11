@@ -1,0 +1,48 @@
+<div @slideInOut class="container mt-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="card border rounded-lg shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Historia Clínica</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-bold">Nombre del paciente</label>
+            <p class="text-lg font-normal">{{this.paciente.Nombre}} {{this.paciente.Apellido}}</p>
+          </div>
+          <div>
+            <label class="text-sm font-bold">Número de identificación</label>
+            <p class="text-lg font-normal">{{this.paciente.Dni}}</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <label class="text-sm font-bold">Atenciones y controles</label>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Especialidad</th>
+                  <th scope="col"> Reseña</th>
+                  <th scope="col">Agregados</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  *ngFor="let turno of turnos">
+                  <td>{{turno.fechaFormateada}}</td>
+                  <td>{{turno.especialidad}}</td>
+                  <td>{{turno.resenia}}</td>
+                  <td>
+                    <ul>
+                      <li *ngFor="let dato of turno.historiaClinica?.datos">
+                        {{ getKey(dato) }}: {{ dato[getKey(dato)] }}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

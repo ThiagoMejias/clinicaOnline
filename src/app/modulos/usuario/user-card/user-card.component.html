@@ -1,3 +1,4 @@
+
 <div class="card">
   <div class="card-body">
     <div class="container">
@@ -14,13 +15,28 @@
       <p class="card-text"><strong>Rol:</strong> {{ usuario.Rol }}</p>
       
       @if(vistaAdmin){
-        <p class="card-text" *ngIf="usuario.Rol === 'especialista'">
-          <strong>Estado:</strong> {{ usuario.Autorizado ? 'Habilitado' : 'Inhabilitado' }}
-        </p>
+        <div *ngIf="usuario.Rol == 'especialista'">
+          <p class="card-text" >
+            <strong>Estado:</strong> {{ usuario.Autorizado ? 'Habilitado' : 'Inhabilitado' }}
+          </p>
+          <hr>
+          <button 
+            class="btn btn-sm"
+            [ngClass]="{'btn-danger': usuario.Autorizado, 'btn-success': !usuario.Autorizado}"
+            (click)="toggleAccess()">
+            {{ usuario.Autorizado ? 'Inhabilitar' : 'Habilitar' }}
+          </button>
+        
+        </div>
         <hr>
-        <button class="btn btn-sm" (click)="toggleAccess()">
-          {{ usuario.Autorizado ? 'Inhabilitar' : 'Habilitar' }}
-        </button>
+        <div *ngIf="usuario.Rol == 'paciente'" class="container-botones">
+          <button class="btn btn-sm btn-primary" (click)="accion('historial')">
+            Historial clinico
+          </button>
+          <button class="btn btn-sm btn-primary " (click)="accion('descargaExcel')">
+            Descarga excel
+          </button>
+        </div>
       }
     </div>
   </div>

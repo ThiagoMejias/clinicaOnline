@@ -12,6 +12,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SelectedDirective } from './Directivas/selected.directive';
+
 
 
 
@@ -21,13 +24,16 @@ import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.
     Test2Component,
     HeaderComponent,
     NoAutorizadoComponent,
+    SelectedDirective,
+
   ],
   imports: [
     MatIconModule,
     BrowserModule,
     AuthModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule 
   ],
   providers: [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 

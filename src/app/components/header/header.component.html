@@ -7,30 +7,34 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <!-- administrador -->
                @if(user.Rol == 'administrador'){
-                <li class="nav-item" >
-                    <a class="nav-link" href="gestionUsuarios">Gestion de usuarios</a>
+                  <li class="nav-item"  >
+                    <a class="nav-link"  href="gestionUsuarios">Gestion de usuarios</a>
+                  </li>
+                  <li class="nav-item" >
+                    <a class="nav-link" routerLink="misTurnos"
+                      routerLinkActive="active">Turnos</a>
                   </li>
                 }
                @if(user.Rol == 'administrador' || user.Rol == 'paciente'){
                 <li class="nav-item" >
-                  <a class="nav-link" routerLink="misTurnos"
-                    routerLinkActive="active">Turnos</a>
+                  <a class="nav-link" routerLink="misTurnos/solicitarTurno"
+                    routerLinkActive="active">Solicitar Turno</a>
                 </li>
                }
       
               <!-- administrador | Paciente -->
       
               <!-- ESPECIALISTA -->
-              <!-- <li class="nav-item" *ngIf="user.Rol == 'especialista'">
-                <a class="nav-link" routerLink="seccion-pacientes"
+              <li class="nav-item" *ngIf="user.Rol == 'especialista'">
+                <a class="nav-link" routerLink="pacientes"
                   routerLinkActive="active">Pacientes</a>
-              </li> -->
+              </li>
       
               <!-- TODOS -->
-              <!-- <li class="nav-item" *ngIf="user.Rol != 'administrador'">
+              <li class="nav-item" *ngIf="user.Rol != 'administrador'">
                 <a class="nav-link" routerLink="misTurnos"
                   routerLinkActive="active">Mis Turnos</a>
-              </li> -->
+              </li>
               <li class="nav-item">
                 <a class="nav-link" routerLink="miPerfil"
                   routerLinkActive="active">Mi Perfil</a>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UsuarioGenerico } from '../../../interfaces/Usuarios';
@@ -24,7 +24,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ]
 })
 export class FormUsuarioComponent implements OnChanges {
-
+  siteKey = '6Leb3QkqAAAAAOPqSZasWIPxKI2JuCXmqzeMPRo3'
+  @ViewChild('captchaElem') captchaElem: any;
   @Input() habilitar: boolean = false;
   @Input() isReadonly: boolean = false;
   @Input() rol: string  = 'administrador';
@@ -67,7 +68,9 @@ export class FormUsuarioComponent implements OnChanges {
       Password: ['', [Validators.required]],
       Imagen: ['', [Validators.required]],
       Imagen2: ['', [Validators.required]],
-      ObraSocial: ['', [Validators.required]],
+      ObraSocial: ['', [Validators.required]]
+      // ,
+      // recaptcha: ['', Validators.required] 
     });
    }
 
@@ -160,6 +163,8 @@ export class FormUsuarioComponent implements OnChanges {
 
   async crearUsuario() : Promise<void>{
       this.loading = true;
+      console.log(this.captchaElem.getResponse());
+      
       this.usuarioGenerico = this.registerForm.value;
       if(this.rol == "especialista" && this.especialidadesSeleccionadas.length < 1){
         Swal.fire({
@@ -172,23 +177,33 @@ export class FormUsuarioComponent implements OnChanges {
         this.loading = false
         return;
       }
-
+      
       if(this.registerForm.valid)
       {
-        this.usuarioGenerico.Rol = this.rol;
-        let imagenesSubidasCorrectamente = await this.subirArchivos(this.usuarioGenerico);
-        if(imagenesSubidasCorrectamente){
-          console.log(this.usuarioGenerico);
-          
-          if(this.rol == 'especialista'){
-            this.usuarioGenerico.Especialidades = this.especialidadesSeleccionadas;
-            this.usuarioGenerico.Autorizado = false;
-          }else{
-            this.usuarioGenerico.Autorizado = true;
-            this.usuarioGenerico.Especialidades = [];
+        if(this.captchaElem.getResponse()){
+          this.usuarioGenerico.Rol = this.rol;
+          let imagenesSubidasCorrectamente = await this.subirArchivos(this.usuarioGenerico);
+          if(imagenesSubidasCorrectamente){
+            console.log(this.usuarioGenerico);
+            
+            if(this.rol == 'especialista'){
+              this.usuarioGenerico.Especialidades = this.especialidadesSeleccionadas;
+              this.usuarioGenerico.Autorizado = false;
+            }else{
+              this.usuarioGenerico.Autorizado = true;
+              this.usuarioGenerico.Especialidades = [];
+            }
+  
+            this.getUsuario.emit(this.usuarioGenerico);
           }
-
-          this.getUsuario.emit(this.usuarioGenerico);
+        }else{
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Debe completar el captcha',
+            showConfirmButton: false,
+            timer: 1500
+          })
         }
       
       }else{
@@ -231,7 +246,19 @@ export class FormUsuarioComponent implements OnChanges {
   }
   
 
+  markFormGroupTouched(formGroup: FormGroup) {
+    (Object as any).values(formGroup.controls).forEach((control : any) => {
+      control.markAsTouched();
 
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
+  handleReset() {
+    console.log('reCAPTCHA reset');
+  }
  
 
 

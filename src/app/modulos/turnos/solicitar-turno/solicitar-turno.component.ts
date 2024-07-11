@@ -11,13 +11,29 @@ import { FranjaHoraria } from '../../../interfaces/franja-horaria';
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 import Swal from 'sweetalert2';
+import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-solicitar-turno',
   templateUrl: './solicitar-turno.component.html',
-  styleUrl: './solicitar-turno.component.css'
+  styleUrl: './solicitar-turno.component.css',
+  animations: [
+    trigger('flyInFromSides', [
+      transition('* => *', [
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+        query(':enter', 
+          stagger('100ms', [
+            animate('800ms ease-out', keyframes([
+              style({ opacity: 0, transform: 'translateX(-100%)', offset: 0 }),
+              style({ opacity: 1, transform: 'translateX(0)', offset: 1 })
+            ]))
+          ]), { optional: true })
+      ])
+    ])
+  ]
 })
 export class SolicitarTurnoComponent implements OnInit {
   isAdmin: boolean = false;
+  loading : boolean = false;
   puedeSeleccionar : boolean = true;
   especialistas : UsuarioGenerico [] = [];
   especialistaSeleccionado: UsuarioGenerico | null = null;
@@ -32,36 +48,41 @@ export class SolicitarTurnoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     let user = this._userService.obtenerUsuario(); 
     if(user){
-      this.usuarioActual = user; 
-        this._usuariosService.getEpecialistas().subscribe(data =>{
-          this.especialistas = data;
-        }); 
-
-        if(this.usuarioActual.Rol == 'administrador'){
- 
-          this.isAdmin = true;
-          this._usuariosService.getPacientes().subscribe(data =>{
-            this.pacientes = data;
-          }); 
-
-        }else{
-          console.log(this.pacienteTurno);
-          
-          this.pacienteTurno = this.usuarioActual;
-          console.log(this.pacienteTurno);
-          
-        }
+      this.cargaDeDatos(user);
     }
-   
+
   }
 
 
+  cargaDeDatos(user : UsuarioGenerico): void {
+    this.usuarioActual = user; 
+    this._usuariosService.getEpecialistas().subscribe(data =>{
+      this.especialistas = data;
+    }); 
+
+    if(this.usuarioActual.Rol == 'administrador'){
+
+      this.isAdmin = true;
+      this._usuariosService.getPacientes().subscribe(data =>{
+        this.pacientes = data;
+        this.loading = false;
+      }); 
+
+    }else{
+      this.pacienteTurno = this.usuarioActual;
+      console.log(this.pacienteTurno);
+      this.loading = false;
+    }
+  }
 
   seleccionoPaciente() {
     const pacienteId = (<HTMLSelectElement>document.getElementById('pacientes')).value;
+    
     let pacienteTurno = this.pacientes.find(paciente => paciente.id == pacienteId);
+    
     if(pacienteTurno)
       this.pacienteTurno = pacienteTurno;
     else
@@ -130,10 +151,8 @@ export class SolicitarTurnoComponent implements OnInit {
         this.turnoService.getTurnosPorEspecialistaEspecialidad(this.especialistaSeleccionado,this.especialidadSeleccionada)
         .subscribe( (turnos : Turno []) => {
     
-          console.log("Turnos actuales:", turnos);
-          console.log("Próximos turnos:", proximosTurnos);
           const turnosFiltrados = proximosTurnos.filter(turnoProximo =>
-            !turnos.some(turno => turno.fechaFormateada === turnoProximo.fechaFormateada)
+            !turnos.some(turno => turno.fechaFormateada == turnoProximo.fechaFormateada)
           );
           this.turnosDisponibles = turnosFiltrados.sort((a, b) => a.fecha.getTime() - b.fecha.getTime());
         })
@@ -170,7 +189,10 @@ export class SolicitarTurnoComponent implements OnInit {
             especialista: especialista,
             fecha: fechaFranja,
             fechaFormateada: format(fechaFranja, 'yyyy-MM-dd h:mm a'),
-            hora: franja.Hora
+            hora: franja.Hora,
+            estado : 'en espera',
+            resenia: '',
+            comentario: ''
           });
         }
       }

@@ -3,6 +3,22 @@
       <mat-icon>add</mat-icon>
       Nuevo usuario
     </button>
+    <button mat-button (click)="mostrarListado()">
+      <mat-icon>list</mat-icon>
+      Listado usuarios
+    </button>
+    <button mat-button (click)="descargaExcel()">
+      <mat-icon>file_download</mat-icon>
+      Generar Excel usuarios
+    </button>
+    <button mat-button (click)="mostraDescargaInforme()">
+      <mat-icon>description</mat-icon>
+      Informe especialistas
+    </button>
+    <button mat-button (click)="descargarLogs()">
+      <mat-icon>vpn_key</mat-icon>
+      Informe de ingresos
+    </button>
     <span class="spacer"></span>
     <div class="search-container">
       <mat-icon class="search-icon">search</mat-icon>
@@ -14,23 +30,51 @@
       [(ngModel)]="this.searchQuery"
       (ngModelChange)="onSearchQueryChange()"/>
     </div>
-</mat-toolbar>    
+  
+</mat-toolbar>     
 
 <div class="container-usuarios">
     <div class="gestion-usuarios-container">
-        <h2>Gestión de Usuarios</h2>
+      
+        <h2 *ngIf="!this.openUserForm" class="title-gestion">Gestión de Usuarios</h2>
         @if(loading){
           <spinner></spinner>
+        }@else {
+          @if(!openViewUser && !openUserForm && !historialClinico && !openFiles) { 
+            <app-dynamic-table [objects]="usersParaTabla" (objectSelected)="mostrarUsuarioEdit($event)"></app-dynamic-table>
+          }
+          @if (openViewUser) {
+              <app-user-card (accionRealizada)="accionRealizada($event)" [usuario]="userSelected" [vistaAdmin]="true" ></app-user-card>
+          }
+          @if(openUserForm){
+            <app-form-usuario rol="administrador"></app-form-usuario>
+          }
+          @if(historialClinico) {
+            <app-historia-clinica [paciente]="userSelected" ></app-historia-clinica>
+          }
+          @if(openFiles){
+            <div class="mb-4">
+              
+              <select class="form-select mb-2" [(ngModel)]="especialistaSeleccionado">
+                <option value="" disabled selected>Seleccionar especialista</option>
+                <option *ngFor="let especialista of especialistas" [ngValue]="especialista">{{ especialista.Nombre }} {{ especialista.Apellido }}</option>
+              </select>
+            
+       
+              <div class="mb-2">
+                <input type="date" class="form-control mb-2" name="fechaInicio" id="fechaInicio" [(ngModel)]="fechaInicio">
+                <input type="date" class="form-control mb-2" name="fechaFin" id="fechaFin" [(ngModel)]="fechaFin">
+              </div>
+            
+           
+              <button class="btn btn-primary" (click)="generarInformeEspecialista()">
+                Descargar informes
+              </button>
+            </div>
+            
+            
+          }
         }
-        <app-dynamic-table [objects]="usersParaTabla" (objectSelected)="mostrarUsuarioEdit($event)"></app-dynamic-table>
-        @if (openViewUser) {
-            <app-user-card [usuario]="userSelected" [vistaAdmin]="true" ></app-user-card>
-        }
-        @if(openUserForm){
-          <app-form-usuario rol="administrador"></app-form-usuario>
-        }
-    </div>
-    
-     
-   
+       
+    </div>   
 </div>

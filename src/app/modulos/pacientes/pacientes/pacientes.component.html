@@ -1,0 +1,62 @@
+@if(!historiaClinica && !altaHistoriaClinica){
+  <div class="container">
+    <div class="title">Pacientes Atendidos</div>
+    
+    <div class="grid">
+      <!-- Iterar sobre cada paciente -->
+      <div *ngFor="let paciente of pacientesConTurnos" class="card">
+        <div class="card-header">
+          <div class="header-content">
+              <div class="rounded-avatar">
+                <img src="{{ paciente.paciente.Imagen }}" alt="Patient Avatar">
+              </div>
+              <div class="grid gap-1">
+                <div class="font-medium">{{paciente.paciente.Nombre}} {{paciente.paciente.Apellido}}</div>
+              </div>
+          </div>
+        </div>
+        
+        <!-- Mostrar detalles de las últimas visitas -->
+        <div class="card-content">
+          <div class="subtitulo">Últimas visitas:</div>
+          <div *ngFor="let visita of paciente.turnos" >
+            <div class="visita-content">
+      
+              <div class="fecha-historicos-content">
+                <div>
+                  <span> {{ visita.fechaFormateada }}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-muted">
+                    <path d="M8 2v4"></path>
+                    <path d="M16 2v4"></path>
+                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                    <path d="M3 10h18"></path>
+                  </svg>
+                  <span> Reseña: {{ visita.resenia }}</span>
+                </div>
+                <button *ngIf="!visita.historiaClinica && visita.estado == 'finalizado' " (click)="agregarHistoriaClinica(visita)" class="btn btn-primary ml-auto">Agregar historia clínica</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn" (click)="verHistoriaClinica(paciente.paciente)">HISTORIA CLINICA</button>
+        </div>
+      </div>
+  
+    </div>  
+  </div>
+}@else {
+  <button class="btn-back" (click)="mostrarListado()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <line x1="5" y1="12" x2="11" y2="18" />
+      <line x1="5" y1="12" x2="11" y2="6" />
+    </svg>
+    Volver a listado
+  </button>
+  
+  @if(altaHistoriaClinica){
+    <app-alta-historia-clinica (close)="mostrarListado()" [turno]="this.turnoSeleccionado"></app-alta-historia-clinica>
+  }@else{
+    <app-historia-clinica [paciente] = "this.pacienteSeleccionado"></app-historia-clinica>
+  }
+}

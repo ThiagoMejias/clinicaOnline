@@ -14,7 +14,7 @@ import { ModuloCompartidoModule } from '../modulo-compartido/modulo-compartido.m
     FormsModule,
     CommonModule,
     AuthRoutingModule,
-    ModuloCompartidoModule
+    ModuloCompartidoModule,
   ]
  
 })

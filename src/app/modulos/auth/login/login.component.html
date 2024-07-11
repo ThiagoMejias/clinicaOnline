@@ -1,8 +1,13 @@
 <div class="login-box">
     <h2>Login</h2>
     <form>
-        <button class="btn btn-primary btn-block mb-3" (click)="cargarUsuarioAdmin()"  >Usuario Admin</button>
-        <button class="btn btn-primary btn-block mb-3" (click)="cargarUsuarioEspecialista()"  >Usuario Especialista</button>
+        <div class="sidebar">
+            <div *ngFor="let usuario of usuarios" class="avatar-item">
+                <a (click)="llenarCampos(usuario)">
+                    <img  [src]="usuario.Imagen"  ImagenRedondeada alt="Avatar">
+                </a>
+            </div>
+        </div>
 
         <div class="user-box">
             <input [(ngModel)]="email" name="email" required  #emailInput="ngModel" type="text">

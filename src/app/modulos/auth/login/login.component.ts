@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserService } from '../../../services/user.service';
 import { UsuarioGenerico } from '../../../interfaces/Usuarios';
+import { IngresosServiceService } from '../../../services/ingresos-service.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   isLoggedIn: boolean = true;
   public loading: boolean = false;
+  usuarios! : UsuarioGenerico[];
   //#region variables de formulario 
   email: string = '';
   emailError: string = '';
@@ -24,21 +26,23 @@ export class LoginComponent {
   confirmPasswordError: string = '';
   // #endregion
 
-
+  
   constructor(private authService: AuthService, private router: Router, private _userService: UserService) {
 
   }
-
-  cargarUsuarioAdmin() {
-    this.email = 'mejiasthiago1@gmail.com';
-    this.password = '12345T';
+  ngOnInit(): void {
+    this._userService.getAll().subscribe(user => {
+      this.usuarios = user;
+      console.log(this.usuarios);
+      
+    });
   }
 
-  cargarUsuarioEspecialista() {
-    this.email = 'comahueindioo@gmail.com';
-    this.password = '12345T';
-  }
 
+  llenarCampos(usuario : UsuarioGenerico){
+    this.email = usuario.Email;
+    this.password = usuario.Password;
+  }
   setLogin() {
 
     this.isLoggedIn = false;
@@ -54,7 +58,7 @@ export class LoginComponent {
           this._userService.getUsernameByEmail(user.email).subscribe(
             (user: UsuarioGenerico) => {
               if (user.Autorizado) {
-                this.router.navigate(['/miPerfil']);
+                this.router.navigate(['/home']);
                 this._userService.guardarUsuario(user);
               } else {
                 Swal.fire({

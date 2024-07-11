@@ -19,13 +19,13 @@ export class EspecialidadService {
     setDoc(docs, {especialidad:  nombreEspecialidad});
   }
 
-  getData(): Observable<Especialidad[]> {
-    return new Observable<Especialidad[]>((observer) => {
+  getData(): Observable<string[]> {
+    return new Observable<string[]>((observer) => {
       onSnapshot(this.especialidadColecction, (snap) => {
-        const Listas: Especialidad[] = [];
+        const Listas: string[] = [];
         snap.docChanges().forEach(x => {
-          const one = x.doc.data() as Especialidad;
-          Listas.push(one);
+          const one = x.doc.data()["especialidad"];
+          Listas.push(one.toString());
         });
         observer.next(Listas);
       });

@@ -19,28 +19,25 @@ export class DynamicTableComponent {
     if (this.objects.length > 0) {
       this.columns = Object.keys(this.objects[0]);
     }
-      
   }
-
 
   ngOnChanges(changes: SimpleChanges) {
     console.log(this.objects);
     if (changes['objects'] && this.objects.length > 0) {
       this.columns = Object.keys(this.objects[0]);
     }
-    
   }
 
   selectObject(object: any) {
     this.selectedObject = object;
-    console.log(this.selectedObject);
-    
     this.objectSelected.emit(object);
   }
 
+  esImagen(column: string): boolean {
+    return column.toLowerCase() =='imagen'; // O cualquier otra lógica para identificar columnas de imágenes
+  }
+
   isColumnVisible(column: string): boolean {
-    console.log(column);
-    
     return column.toLocaleLowerCase() != 'id';
   }
 }

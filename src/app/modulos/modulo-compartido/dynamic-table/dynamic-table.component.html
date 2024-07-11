@@ -1,16 +1,21 @@
-<table style="text-transform: uppercase;" >
-    <thead>
-      <tr>
-        <th *ngFor="let column of columns"  [hidden]="!isColumnVisible(column)" >{{ column }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let object of objects" 
-          (click)="selectObject(object)" 
-          [class.selected]="object === selectedObject"
-          style="cursor: pointer;">
-          <td *ngFor="let column of columns" [hidden]="!isColumnVisible(column)" >{{ object[column] }}</td>
-        </tr>
-    </tbody>
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns" [hidden]="!isColumnVisible(column)">{{ column | uppercase }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let object of objects | ordernarUsuarios" 
+        (click)="selectObject(object)" 
+        [class.selected]="object == selectedObject"
+        style="cursor: pointer;"
+        >
+      <td *ngFor="let column of columns" [hidden]="!isColumnVisible(column)">
+        <ng-container *ngIf="esImagen(column); else textContent">
+          <img [src]="object[column]" alt="{{ column }}" ImagenRedondeada>
+        </ng-container>
+        <ng-template #textContent>{{ object[column] | uppercase }}</ng-template>
+      </td>
+    </tr>
+  </tbody>
 </table>
-  

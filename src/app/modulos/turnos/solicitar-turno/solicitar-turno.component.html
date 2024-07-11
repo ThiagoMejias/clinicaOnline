@@ -1,53 +1,59 @@
 <div class="container">
   <h1 class="title">Reserva una Cita</h1>
 
-  <select *ngIf="isAdmin" class="form-control w-50 mb-4" name="pacientes" (change)="seleccionoPaciente()" id="pacientes">
-    <option value="">Seleccionar paciente...</option>
-    <option *ngFor="let paciente of pacientes" [value]="paciente.id">{{ paciente.Nombre }} {{ paciente.Apellido }}</option>
-  </select>
-  
-  @if(pacienteTurno != null){
-    <div class="grid">
-      <button
-        *ngFor="let especialista of especialistas"
-        [ngClass]="{
-          'selected': especialistaSeleccionado?.Email == especialista?.Email
-        }"
-        class="especialista"
-        (click)="seleccionEspecialista(especialista)"
-      >
-        <img [src]="especialista.Imagen" [alt]="especialista.Nombre" class="especialista-img" />
-        <span class="especialista-name">{{ especialista.Nombre}} {{especialista.Apellido}}</span>
-      </button>
-    </div>
-    <div *ngIf="especialistaSeleccionado" class="specialties">
-      <h2 class="subtitulo">Selecciona una Especialidad</h2>
+  @if(!loading){
+    <select *ngIf="isAdmin" class="form-control w-50 mb-4" name="pacientes" (change)="seleccionoPaciente()" id="pacientes">
+      <option value="">Seleccionar paciente...</option>
+      <option *ngFor="let paciente of pacientes" [value]="paciente.id">{{ paciente.Nombre }} {{ paciente.Apellido }}</option>
+    </select>
+    
+    @if(pacienteTurno != null){
       <div class="grid">
-        <button
-          *ngFor="let especialidad of especialistaSeleccionado.Especialidades"
-          [ngClass]="{
-            'selected': especialidad?.id === especialidad.id
-          }"
-          class="especialidad"
-          (click)="seleccionEspecialidad(especialidad)"
-        >
-          <img src="/assets/estetoscopio.png" [alt]="especialidad" class="especialidad-img" />
-          <span class="especialidad-name">{{ especialidad }}</span>
-        </button>
-      </div>
-    </div>
-    <div *ngIf="especialidadSeleccionada" class="turnos">
-      <h2 class="subtitulo">Selecciona una Cita Disponible</h2>
-      <div class="grid">
-        <button
-          *ngFor="let turno of turnosDisponibles"
-          class="turno"
-          (click)="turnoSeleccionado(turno)"
-        >
-          <span class="turno-date">{{ turno.fechaFormateada }}</span>
-        </button>
-      </div>
-    </div>
-  }
+          <button
+            *ngFor="let especialista of especialistas"
+            [ngClass]="{
+              'selected': especialistaSeleccionado?.Email == especialista?.Email
+            }"
 
+            class="especialista"
+            (click)="seleccionEspecialista(especialista)"
+            >
+            <span class="especialista-name">{{ especialista.Nombre}} {{especialista.Apellido}}</span>
+            <img [src]="especialista.Imagen" [alt]="especialista.Nombre" class="especialista-img" />
+          </button>
+        </div>
+        <div *ngIf="especialistaSeleccionado" class="specialties">
+          <h2 class="subtitulo">Selecciona una Especialidad</h2>
+          <div [@flyInFromSides] class="grid">
+            <button
+              *ngFor="let especialidad of especialistaSeleccionado.Especialidades"
+              [ngClass]="{
+                'selected': especialidad?.id === especialidad.id
+              }"
+              class="especialidad"
+              (click)="seleccionEspecialidad(especialidad)"
+              [@flyInFromSides]
+            >
+              <img src="https://firebasestorage.googleapis.com/v0/b/trabajopracticofinallaboiv.appspot.com/o/users%2Fdoctor.png?alt=media&token=4e45bd96-8bd4-4e80-86c9-d70b000d1b6d" [alt]="especialidad" class="especialidad-img" />
+              <span class="especialidad-name">{{ especialidad }}</span>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="especialidadSeleccionada" class="turnos">
+          <h2 class="subtitulo">Selecciona una Cita Disponible</h2>
+          <div [@flyInFromSides] class="grid">
+            <button
+              *ngFor="let turno of turnosDisponibles"
+              class="turno"
+              (click)="turnoSeleccionado(turno)"
+              [@flyInFromSides]
+              >
+              <span class="turno-date">{{ turno.fechaFormateada }}</span>
+            </button>
+          </div>
+      </div>
+    }
+  }@else {
+    <spinner></spinner>
+  }
 </div>

@@ -1,18 +1,36 @@
 
 <mat-toolbar class="mat-elevation-z4 mb-5">
-        <a (click)="toggleVerPerfil()"><h2 [ngClass]="{'selected': miPerfil}" class="Titulo" >Mi perfil</h2></a>
+        <a (click)="toggleVerPerfil()"><h2 [ngClass]="{'selected': miPerfil}">Mi perfil</h2></a>
         <span class="spacer"></span>
         @if(this.user.Rol == "especialista"){
-            <a (click)="toggleVerHorarios()"><h2 [ngClass]="{'selected': misHorarios}" class="Titulo">Mis Horarios</h2></a>
+            <a (click)="toggleVerHorarios()"><h2 [ngClass]="{'selected': misHorarios}" >Mis Horarios</h2></a>
+        }@else if (this.user.Rol == 'paciente') {
+            <a (click)="toggleHistorialClinico()"><h2 [ngClass]="{'selected': historialClinico}" >Historial Clinico</h2></a>
+            <a (click)="descargarHistoriaClinica()"><h2>Descargar Historial Clinico</h2></a>
         }
 </mat-toolbar>    
 
 
 @if (miPerfil) {
+    @if (this.user.Rol == 'paciente') {
+            <div class="d-flex containerDescarga">
+                <div>
+                    <select class="form-control m-4"
+                    (change)="seleccionarEspecialidad($event.target)">
+                    <option  [value]="">Seleccione especialidad para generar informe</option>
+                    <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
+                </select>
+            </div>
+            <button class="btn btn-primary m-4" (click)="descargarTurnosPorEspecialidad()">Descargar turnos</button>
+        </div>
+    }
     <div class="container-user-card">
         <app-user-card  [usuario]="this.user"></app-user-card>   
     </div>
 }
 @if(misHorarios){
     <app-mis-horarios [usuario]="this.user"></app-mis-horarios>
+}
+@if(historialClinico) {
+    <app-historia-clinica *ngIf="historialClinico" [paciente]="this.user" ></app-historia-clinica>
 }

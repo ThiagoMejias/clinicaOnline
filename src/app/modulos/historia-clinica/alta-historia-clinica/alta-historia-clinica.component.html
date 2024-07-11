@@ -1,0 +1,87 @@
+<div class="container" style="width: 80%; margin: 0 auto;">
+    <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()">
+      <div class="rounded-lg border bg-light text-dark shadow-sm w-full max-w-2xl">
+        <div class="flex flex-col space-y-3 p-4">
+          <h3 class="text-xl font-semibold">
+            Historia Clínica del Paciente
+          </h3>
+          <p class="text-sm text-muted">Ingrese los datos del paciente</p>
+        </div>
+        <div class="p-4">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="altura" class="form-label">Altura</label>
+              <input type="number" class="form-control" id="altura" placeholder="Ingrese la altura" formControlName="altura">
+              <small class="text-danger" *ngIf="historiaClinicaForm.get('altura')!.invalid && (historiaClinicaForm.get('altura')!.dirty || historiaClinicaForm.get('altura')!.touched)">Debe ingresar la altura</small>
+            </div>
+            <div class="col">
+              <label for="peso" class="form-label">Peso</label>
+              <input type="number" class="form-control" id="peso" placeholder="Ingrese el peso" formControlName="peso">
+              <small class="text-danger" *ngIf="historiaClinicaForm.get('peso')!.invalid && (historiaClinicaForm.get('peso')!.dirty || historiaClinicaForm.get('peso')!.touched)">Debe ingresar el peso</small>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="temperatura" class="form-label">Temperatura</label>
+              <input type="number" class="form-control" id="temperatura" placeholder="Ingrese la temperatura" formControlName="temperatura">
+              <small class="text-danger" *ngIf="historiaClinicaForm.get('temperatura')!.invalid && (historiaClinicaForm.get('temperatura')!.dirty || historiaClinicaForm.get('temperatura')!.touched)">Debe ingresar la temperatura</small>
+            </div>
+            <div class="col">
+              <label for="presion" class="form-label">Presión</label>
+              <input type="text" class="form-control" id="presion" placeholder="Ingrese la presión" formControlName="presion">
+              <small class="text-danger" *ngIf="historiaClinicaForm.get('presion')!.invalid && (historiaClinicaForm.get('presion')!.dirty || historiaClinicaForm.get('presion')!.touched)">Debe ingresar la presión</small>
+            </div>
+          </div>
+          <hr class="my-4">
+          <div class="mb-3">
+            <div class="row">
+              <div class="col">
+                <label for="dato1-clave" class="form-label">Dato 1 </label>
+                <input type="text" class="form-control" id="dato1-clave" placeholder="Ingrese la clave" formControlName="dato1Clave">
+                <small class="text-danger" *ngIf="historiaClinicaForm.get('dato1Clave')!.invalid && (historiaClinicaForm.get('dato1Clave')!.dirty || historiaClinicaForm.get('dato1Clave')!.touched)">Debe ingresar la clave</small>
+              </div>
+              <div class="col">
+                <label for="dato1-valor" class="form-label">Dato 1</label>
+                <textarea class="form-control" id="dato1-valor" rows="3" placeholder="Ingrese el valor" formControlName="dato1Valor"></textarea>
+                <small class="text-danger" *ngIf="historiaClinicaForm.get('dato1Valor')!.invalid && (historiaClinicaForm.get('dato1Valor')!.dirty || historiaClinicaForm.get('dato1Valor')!.touched)">Debe ingresar el valor</small>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row">
+              <div class="col">
+                <label for="dato2-clave" class="form-label">Dato 2 </label>
+                <input type="text" class="form-control" id="dato2-clave" placeholder="Ingrese la clave" formControlName="dato2Clave">
+                <small class="text-danger" *ngIf="historiaClinicaForm.get('dato2Clave')!.invalid && (historiaClinicaForm.get('dato2Clave')!.dirty || historiaClinicaForm.get('dato2Clave')!.touched)">Debe ingresar la clave</small>
+              </div>
+              <div class="col">
+                <label for="dato2-valor" class="form-label">Dato </label>
+                <textarea class="form-control" id="dato2-valor" rows="3" placeholder="Ingrese el valor" formControlName="dato2Valor"></textarea>
+                <small class="text-danger" *ngIf="historiaClinicaForm.get('dato2Valor')!.invalid && (historiaClinicaForm.get('dato2Valor')!.dirty || historiaClinicaForm.get('dato2Valor')!.touched)">Debe ingresar el valor</small>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row">
+              <div class="col">
+                <label for="dato3-clave" class="form-label">Dato </label>
+                <input type="text" class="form-control" id="dato3-clave" placeholder="Ingrese la clave" formControlName="dato3Clave">
+                <small class="text-danger" *ngIf="historiaClinicaForm.get('dato3Clave')!.invalid && (historiaClinicaForm.get('dato3Clave')!.dirty || historiaClinicaForm.get('dato3Clave')!.touched)">Debe ingresar la clave</small>
+              </div>
+              <div class="col">
+                <label for="dato3-valor" class="form-label">Dato </label>
+                <textarea class="form-control" id="dato3-valor" rows="3" placeholder="Ingrese el valor" formControlName="dato3Valor"></textarea>
+                <small class="text-danger" *ngIf="historiaClinicaForm.get('dato3Valor')!.invalid && (historiaClinicaForm.get('dato3Valor')!.dirty || historiaClinicaForm.get('dato3Valor')!.touched)">Debe ingresar el valor</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 d-flex justify-content-end">
+          <button class="btn btn-primary" type="submit">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
